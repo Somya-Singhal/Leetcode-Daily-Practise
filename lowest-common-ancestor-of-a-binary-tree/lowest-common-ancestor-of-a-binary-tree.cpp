@@ -9,29 +9,18 @@
  */
 class Solution {
 public:
-    bool constructpath(TreeNode* root,TreeNode* node,vector<TreeNode*>& path)
-    {
-        if(root==NULL)
-            return false;
-        path.push_back(root);
-        if(root==node)
-            return true;
-        if(constructpath(root->left,node,path) || constructpath(root->right,node,path))
-            return true;
-        path.pop_back();
-        return false;
-    }
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-        vector<TreeNode*>path1;
-        vector<TreeNode*>path2;
-        TreeNode* ans=NULL;
-        if(constructpath(root,p,path1)==false || constructpath(root,q,path2)==false)
+        if(root==NULL)
             return NULL;
-        for(int i=0;i<path1.size() && i<path2.size() ;i++)
-        {
-            if(path1[i]==path2[i])
-                ans=path1[i];
-        }
-        return ans;
+        if(root==p || root==q)
+            return root;
+        TreeNode* lca1=lowestCommonAncestor(root->left,p,q);
+        TreeNode* lca2=lowestCommonAncestor(root->right,p,q);
+        if(lca1!=NULL && lca2!=NULL)
+            return root;
+        if(lca1)
+            return lca1;
+        else
+            return lca2;
     }
 };
