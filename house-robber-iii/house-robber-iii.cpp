@@ -18,6 +18,25 @@
        return max(root->val+(root->left?rob(root->left->left)+rob(root->left->right):0)+(root->right?rob(root->right->left)+rob(root->right->right):0),rob(root->left)+rob(root->right));
     } 
     */
+
+/*
+ vector<int>robdp(TreeNode* root)
+    {
+        if(root==NULL)
+            return vector<int>(2,0);
+        vector<int>left=robdp(root->left);
+        vector<int>right=robdp(root->right);
+        vector<int>ans(2,0);
+        ans[0]=left[1]+root->val+right[1];
+        ans[1]=max(left[0],left[1])+max(right[0],right[1]);
+        return ans;
+    }
+    int rob(TreeNode* root) {
+      vector<int>res=robdp(root);
+      return max(res[0],res[1]);
+    }
+*/
+
 struct housepair{
     int withoutrobbery=0;
     int withrobbery=0;
