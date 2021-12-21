@@ -18,34 +18,69 @@
 
 class NestedIterator {
 public:
-    vector<int>res;
-    int curr=0;
-    void helper(vector<NestedInteger> &nestedList)
-    {
-        for(int i=0;i<nestedList.size();i++)
-        {
-            if(nestedList[i].isInteger())
-                res.push_back(nestedList[i].getInteger());
-            else
-                helper(nestedList[i].getList());
-        }
-    }
+   //     vector<int>res;
+//     int curr=0;
+//     void helper(vector<NestedInteger> &nestedList)
+//     {
+//         for(int i=0;i<nestedList.size();i++)
+//         {
+//             if(nestedList[i].isInteger())
+//                 res.push_back(nestedList[i].getInteger());
+//             else
+//                 helper(nestedList[i].getList());
+//         }
+//     }
+//     NestedIterator(vector<NestedInteger> &nestedList) {
+//         helper(nestedList);
+//     }
+    
+//     int next() {
+//         int ans=-1;
+//         if(curr<res.size())
+//         {
+//             ans=res[curr];
+//             curr++;
+//         }
+//         return ans;
+//     }
+    
+//     bool hasNext() {
+//         return curr<res.size();
+//     }
+    
+    
+    stack<NestedInteger>s;
     NestedIterator(vector<NestedInteger> &nestedList) {
-        helper(nestedList);
+       prepare(nestedList);
     }
     
     int next() {
-        int ans=-1;
-        if(curr<res.size())
-        {
-            ans=res[curr];
-            curr++;
-        }
+      if(!hasNext())
+      {
+         return -1; 
+      }
+       int ans=s.top().getInteger();
+        s.pop();
         return ans;
     }
     
     bool hasNext() {
-        return curr<res.size();
+        while(!s.empty() && !s.top().isInteger())
+        {
+            NestedInteger curr=s.top();
+            s.pop();
+            vector<NestedInteger>list=curr.getList();
+            prepare(list);
+        }
+        return !s.empty();
+    }
+    
+    void prepare(vector<NestedInteger> &nestedList)
+    {
+       for(int i=nestedList.size()-1;i>=0;i--)
+       {
+           s.push(nestedList[i]);
+       } 
     }
 };
 
