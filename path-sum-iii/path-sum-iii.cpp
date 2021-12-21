@@ -11,29 +11,57 @@
  */
 class Solution {
 public:
+   // int res=0;
+    // void seconddfs(TreeNode* root,int targetSum)
+    // {
+    //     if(root==NULL)
+    //         return;
+    //     targetSum-=root->val;
+    //     if(targetSum==0)
+    //         res++;
+    //     seconddfs(root->left,targetSum);
+    //     seconddfs(root->right,targetSum);
+    // }
+    // void firstdfs(TreeNode* root,int targetSum)
+    // {
+    //     if(root==NULL)
+    //         return;
+    //     seconddfs(root,targetSum);
+    //     firstdfs(root->left,targetSum);
+    //     firstdfs(root->right,targetSum);
+    // }
+    // int pathSum(TreeNode* root, int targetSum) {
+    //    if(root==NULL)
+    //         return 0;
+    //    firstdfs(root,targetSum);
+    //    return res;
+    // }
+    
+    //prefix sum
     int res=0;
-    void seconddfs(TreeNode* root,int targetSum)
+    int k;
+    unordered_map<int,int>mp;
+    void dfs(TreeNode* root,int pre_sum)
     {
         if(root==NULL)
             return;
-        targetSum-=root->val;
-        if(targetSum==0)
+        pre_sum+=root->val;
+        if(pre_sum==k)
             res++;
-        seconddfs(root->left,targetSum);
-        seconddfs(root->right,targetSum);
-    }
-    void firstdfs(TreeNode* root,int targetSum)
-    {
-        if(root==NULL)
-            return;
-        seconddfs(root,targetSum);
-        firstdfs(root->left,targetSum);
-        firstdfs(root->right,targetSum);
+         res+=mp[pre_sum-k];
+             mp[pre_sum]++;
+        dfs(root->left,pre_sum);
+        dfs(root->right,pre_sum);
+        mp[pre_sum]--;
+        if(mp[pre_sum]==0)
+           mp.erase(pre_sum);
     }
     int pathSum(TreeNode* root, int targetSum) {
+       k=targetSum;
        if(root==NULL)
             return 0;
-       firstdfs(root,targetSum);
+       dfs(root,0);
        return res;
     }
+    
 };
