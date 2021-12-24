@@ -18,26 +18,60 @@ public:
 
 class Solution {
 public:
-    Node* connect(Node* root) {
+    //time and space->O(n)
+    // Node* connect(Node* root) {
+    //     if(root==NULL)
+    //         return NULL;
+    //     queue<Node*>q;
+    //     q.push(root);
+    //     while(!q.empty())
+    //     {
+    //         int len=q.size();
+    //         for(int i=0;i<len;i++)
+    //         {
+    //             Node* curr=q.front();
+    //             q.pop();
+    //             if(i!=len-1)
+    //                 curr->next=q.front();
+    //             if(curr->left)
+    //                 q.push(curr->left);
+    //             if(curr->right)
+    //                 q.push(curr->right);
+    //         }
+    //     }
+    //     return root;
+    // }
+    
+     Node* connect(Node* root) {
         if(root==NULL)
             return NULL;
-        queue<Node*>q;
-        q.push(root);
-        while(!q.empty())
+         Node* curr=root,*prev=NULL,*head=NULL;
+        while(curr!=NULL)
         {
-            int len=q.size();
-            for(int i=0;i<len;i++)
+            while(curr!=NULL)
             {
-                Node* curr=q.front();
-                q.pop();
-                if(i!=len-1)
-                    curr->next=q.front();
                 if(curr->left)
-                    q.push(curr->left);
+                {
+                    if(prev==NULL)
+                        head=curr->left;
+                    else
+                    prev->next=curr->left;
+                    prev=curr->left;
+                }
                 if(curr->right)
-                    q.push(curr->right);
+                {
+                    if(prev==NULL)
+                        head=curr->right;
+                    else
+                    prev->next=curr->right;
+                    prev=curr->right;
+                }
+                curr=curr->next;
             }
+            curr=head;
+            head=NULL;
+            prev=NULL;
         }
-        return root;
+         return root;
     }
 };
