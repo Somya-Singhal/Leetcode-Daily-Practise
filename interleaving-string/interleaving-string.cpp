@@ -20,31 +20,69 @@ public:
 //     }
     
     //memoization
-    unordered_map<string,bool>memo;
-    bool Interleaverec(int p1,int p2,int p3,string s1, string s2, string s3,int n1,int n2,int n3)
-    {
-        if(p3==n3)
-            return (p1==n1 && p2==n2)?true:false;
-        string key=to_string(p1)+"*"+to_string(p2)+"*"+to_string(p3);
-        if(memo.find(key)!=memo.end())
-            return memo[key];
-        if(p1==n1)
-            return memo[key]=s2[p2]==s3[p3]?Interleaverec(p1,p2+1,p3+1,s1,s2,s3,n1,n2,n3):false;
-        if(p2==n2)
-            return memo[key]=s1[p1]==s3[p3]?Interleaverec(p1+1,p2,p3+1,s1,s2,s3,n1,n2,n3):false;
-        bool first=false,second=false;
-        if(s1[p1]==s3[p3])
-            first=Interleaverec(p1+1,p2,p3+1,s1,s2,s3,n1,n2,n3);
-        if(s2[p2]==s3[p3])
-            second=Interleaverec(p1,p2+1,p3+1,s1,s2,s3,n1,n2,n3);
-        return memo[key]=first || second;
-    }
-    bool isInterleave(string s1, string s2, string s3) {
-         int n1=s1.length();
+    // unordered_map<string,bool>memo;
+    // bool Interleaverec(int p1,int p2,int p3,string s1, string s2, string s3,int n1,int n2,int n3)
+    // {
+    //     if(p3==n3)
+    //         return (p1==n1 && p2==n2)?true:false;
+    //     string key=to_string(p1)+"*"+to_string(p2)+"*"+to_string(p3);
+    //     if(memo.find(key)!=memo.end())
+    //         return memo[key];
+    //     if(p1==n1)
+    //         return memo[key]=s2[p2]==s3[p3]?Interleaverec(p1,p2+1,p3+1,s1,s2,s3,n1,n2,n3):false;
+    //     if(p2==n2)
+    //         return memo[key]=s1[p1]==s3[p3]?Interleaverec(p1+1,p2,p3+1,s1,s2,s3,n1,n2,n3):false;
+    //     bool first=false,second=false;
+    //     if(s1[p1]==s3[p3])
+    //         first=Interleaverec(p1+1,p2,p3+1,s1,s2,s3,n1,n2,n3);
+    //     if(s2[p2]==s3[p3])
+    //         second=Interleaverec(p1,p2+1,p3+1,s1,s2,s3,n1,n2,n3);
+    //     return memo[key]=first || second;
+    // }
+    // bool isInterleave(string s1, string s2, string s3) {
+    //      int n1=s1.length();
+    //      int n2=s2.length();
+    //      int n3=s3.length();
+    //     if(n1+n2!=n3)
+    //         return false;
+    //     return Interleaverec(0,0,0,s1,s2,s3,n1,n2,n3);
+    // }
+    
+    //dp
+      bool isInterleave(string s1, string s2, string s3) {
+          int n1=s1.length();
          int n2=s2.length();
          int n3=s3.length();
         if(n1+n2!=n3)
             return false;
-        return Interleaverec(0,0,0,s1,s2,s3,n1,n2,n3);
+          bool dp[n1+1][n2+1];
+          for(int i=0;i<=n1;i++)
+          {
+              for(int j=0;j<=n2;j++)
+              {
+                  if(i==0 && j==0)
+                      dp[i][j]=true;
+                  else if(i==0)
+                  {
+                      if(s2[j-1]==s3[i+j-1])
+                          dp[i][j]=dp[i][j-1];
+                      else
+                          dp[i][j]=false;
+                  }
+                  else
+                  {
+                      if(i!=0 && j!=0 && s1[i-1]==s3[i+j-1] && s2[j-1]==s3[i+j-1])
+                          dp[i][j]=dp[i-1][j] || dp[i][j-1];
+                      else if(s1[i-1]==s3[i+j-1])
+                          dp[i][j]=dp[i-1][j];
+                      else if(j!=0 && s2[j-1]==s3[i+j-1])
+                          dp[i][j]=dp[i][j-1];
+                      else
+                          dp[i][j]=false;
+                  }
+              }
+          }
+          return dp[n1][n2]; 
     }
+    
 };
