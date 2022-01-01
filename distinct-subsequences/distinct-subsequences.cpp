@@ -1,6 +1,6 @@
 class Solution {
 public:
-    //recursive
+   //recursive
     // int distinctrec(int i,int j,string s,string t)
     // {
     //     // cout<<s<<" "<<"\n";
@@ -17,31 +17,48 @@ public:
     // }
     
     //dp
+    //  int numDistinct(string s, string t) {
+    //      int n=s.length();
+    //      int m=t.length();
+    //      vector<long long>dp(n+1,0);
+    //      for(int i=0;i<=n;i++)
+    //      {
+    //          dp[i]=1;
+    //      }
+    //      int temp=1,prev=0;
+    //      for(int i=1;i<=m;i++)
+    //      {
+    //          for(int j=0;j<=n;j++)
+    //          {
+    //              temp=dp[j];
+    //              if(j==0)
+    //                  dp[j]=0;
+    //              else if(t[i-1]==s[j-1])
+    //                  dp[j]=prev+dp[j-1];
+    //              else
+    //              {
+    //                  dp[j]=dp[j-1];
+    //              }
+    //              prev=temp;
+    //          }
+    //      }
+    //      return dp[n];
+    // }
      int numDistinct(string s, string t) {
-         int n=s.length();
-         int m=t.length();
-         vector<long long>dp(n+1,0);
-         for(int i=0;i<=n;i++)
+         int m=t.length(),n=s.length();
+         vector<long long>dp(m+1,0);
+         dp[0]=1;
+         for(int j=1;j<=n;j++)
          {
-             dp[i]=1;
-         }
-         int temp=1,prev=0;
-         for(int i=1;i<=m;i++)
-         {
-             for(int j=0;j<=n;j++)
+             int pre=1;
+             for(int i=1;i<=m;i++)
              {
-                 temp=dp[j];
-                 if(j==0)
-                     dp[j]=0;
-                 else if(t[i-1]==s[j-1])
-                     dp[j]=prev+dp[j-1];
-                 else
-                 {
-                     dp[j]=dp[j-1];
-                 }
-                 prev=temp;
+                 int temp=dp[i];
+                 if(t[i-1]==s[j-1])
+                     dp[i]=dp[i]+pre;
+                 pre=temp;
              }
          }
-         return dp[n];
-    }
+         return dp[m];
+     }
 };
