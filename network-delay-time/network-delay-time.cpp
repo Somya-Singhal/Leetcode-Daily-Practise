@@ -1,5 +1,6 @@
 class Solution {
 public:
+    //dijkstra algorithm-->you can use dfs or bfs(both will work)-->time->O(V+E)
     void dfs(int src,vector<vector<pair<int,int>>>& adj,vector<int>& dist)
     {
         for(auto x:adj[src])
