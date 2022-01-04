@@ -43,28 +43,56 @@ public:
     // }
     
     //dfs
-    bool dfs(int src,vector<vector<int>>& graph,vector<bool>& rect,vector<bool>& safe)
+    // bool dfs(int src,vector<vector<int>>& graph,vector<bool>& rect,vector<bool>& safe)
+    // {
+    //     safe[src]=true;
+    //     rect[src]=true;
+    //     for(auto x:graph[src])
+    //     {
+    //           if(!safe[x] && dfs(x,graph,rect,safe))
+    //                 return true;
+    //           else if(rect[x]==true)
+    //                 return true;
+    //     }
+    //     rect[src]=false;
+    //     return false;
+    // }
+    // vector<int> eventualSafeNodes(vector<vector<int>>& graph) {
+    //     vector<int>res;
+    //     int n=graph.size();
+    //     for(int i=0;i<n;i++)
+    //     {
+    //         vector<bool>safe(n,false);
+    //         vector<bool>rect(n,false);
+    //         if(dfs(i,graph,rect,safe)==false)
+    //             res.push_back(i);       
+    //     }
+    //     return res;
+    // }
+    
+    //dfs->2nd approach
+    bool dfs(int src,vector<vector<int>>& graph,vector<int>& color)
     {
-        safe[src]=true;
-        rect[src]=true;
+        if(color[src]>0)
+            return color[src]==2;
+        color[src]=1;
         for(auto x:graph[src])
         {
-              if(!safe[x] && dfs(x,graph,rect,safe))
-                    return true;
-              else if(rect[x]==true)
-                    return true;
+            if(color[x]==2)
+                continue;
+            else if(color[x]==1 || !dfs(x,graph,color))
+                    return false;
         }
-        rect[src]=false;
-        return false;
+        color[src]=2;
+        return true;
     }
     vector<int> eventualSafeNodes(vector<vector<int>>& graph) {
         vector<int>res;
         int n=graph.size();
+        vector<int>color(n,0);
         for(int i=0;i<n;i++)
         {
-            vector<bool>safe(n,false);
-            vector<bool>rect(n,false);
-            if(dfs(i,graph,rect,safe)==false)
+            if(dfs(i,graph,color))
                 res.push_back(i);       
         }
         return res;
