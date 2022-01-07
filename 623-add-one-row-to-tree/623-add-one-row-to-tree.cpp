@@ -33,29 +33,14 @@ public:
                     return root;
                 if(currdepth==depth-1)
                 {
-                    if(curr->left)
-                    {
-                        TreeNode* newroot=new TreeNode(val);
-                         newroot->left=curr->left;
-                        curr->left=newroot;
-                    }
-                    else
-                    {
-                         TreeNode* newroot=new TreeNode(val);
-                         curr->left=newroot;
-                    }
-                    if(curr->right)
-                    {
-                        TreeNode* newroot=new TreeNode(val);
-                         newroot->right=curr->right;
-                        curr->right=newroot;
-                       
-                    }
-                    else
-                    {
-                        TreeNode* newroot=new TreeNode(val);
-                         curr->right=newroot;
-                    }
+                    TreeNode *newroot1=new TreeNode(val),*newroot2=new TreeNode(val);
+                     if(curr->left)
+                         newroot1->left=curr->left;
+                     if(curr->right)
+                         newroot2->right=curr->right;
+                     curr->left=newroot1;
+                     curr->right=newroot2;
+                   
                 }
                 else 
                 {
