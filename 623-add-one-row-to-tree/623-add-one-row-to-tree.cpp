@@ -54,34 +54,74 @@ public:
 //         }
 //         return root;
 //     }
-    //dfs
-    void insert(TreeNode* root,int val,int depth,int maxlevel)
-    {
-        if(root==NULL)
-            return;
-        if(maxlevel==depth-1)
-        {
+    //dfs->recursive
+//     void insert(TreeNode* root,int val,int depth,int maxlevel)
+//     {
+//         if(root==NULL)
+//             return;
+//         if(maxlevel==depth-1)
+//         {
             
-             TreeNode *newroot1=new TreeNode(val),*newroot2=new TreeNode(val);
-                     if(root->left)
-                         newroot1->left=root->left;
-                     if(root->right)
-                         newroot2->right=root->right;
-                     root->left=newroot1;
-                     root->right=newroot2;
-        }
-        insert(root->left,val,depth,maxlevel+1);
-        insert(root->right,val,depth,maxlevel+1);
-        return;
-    }
-    TreeNode* addOneRow(TreeNode* root, int val, int depth) {
+//              TreeNode *newroot1=new TreeNode(val),*newroot2=new TreeNode(val);
+//                      if(root->left)
+//                          newroot1->left=root->left;
+//                      if(root->right)
+//                          newroot2->right=root->right;
+//                      root->left=newroot1;
+//                      root->right=newroot2;
+//         }
+//         insert(root->left,val,depth,maxlevel+1);
+//         insert(root->right,val,depth,maxlevel+1);
+//         return;
+//     }
+//     TreeNode* addOneRow(TreeNode* root, int val, int depth) {
+//         if(depth==1)
+//         {
+//             TreeNode* newroot=new TreeNode(val);
+//             newroot->left=root;
+//             return newroot;
+//         }
+//         insert(root,val,depth,1);
+//         return root;
+//     }
+    
+    //dfs->stack
+     TreeNode* addOneRow(TreeNode* root, int val, int depth) {
         if(depth==1)
         {
             TreeNode* newroot=new TreeNode(val);
             newroot->left=root;
             return newroot;
         }
-        insert(root,val,depth,1);
+        stack<pair<TreeNode*,int>>s;
+        s.push(make_pair(root,1));
+        while(!s.empty())
+        {
+            TreeNode* curr=s.top().first;
+            int currdepth=s.top().second;
+            s.pop();
+            if(currdepth==depth-1)
+            {
+                     TreeNode *newroot1=new TreeNode(val),*newroot2=new TreeNode(val);
+                     if(curr->left)
+                         newroot1->left=curr->left;
+                     if(curr->right)
+                         newroot2->right=curr->right;
+                     curr->left=newroot1;
+                     curr->right=newroot2;
+            }
+            else
+            {
+                if(curr->left)
+                {
+                   s.push(make_pair(curr->left,currdepth+1)); 
+                }
+               if(curr->right)
+                {
+                   s.push(make_pair(curr->right,currdepth+1)); 
+                }
+            }
+        }
         return root;
-    }
+     }
 };
