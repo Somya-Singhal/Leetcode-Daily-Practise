@@ -11,30 +11,47 @@
  */
 class Solution {
 public:
-    bool inorder(TreeNode* root, TreeNode* subRoot)
+    // bool inorder(TreeNode* root, TreeNode* subRoot)
+    // {
+    //     if(root==NULL && subRoot==NULL)
+    //         return true;
+    //     if(root==NULL || subRoot==NULL)
+    //         return false;
+    //     if(inorder(root->left,subRoot->left)==false)
+    //         return false;
+    //     if(root->val!=subRoot->val)
+    //         return false;
+    //     return inorder(root->right,subRoot->right);
+    // }
+    // bool isSubtree(TreeNode* root, TreeNode* subRoot) {
+    //     if((root==NULL && subRoot!=NULL) || (root!=NULL && subRoot==NULL))
+    //         return false;
+    //     if(root->val==subRoot->val)
+    //     {
+    //         if(inorder(root,subRoot)==true)
+    //             return true;
+    //     }
+    //     if(isSubtree(root->left,subRoot)==true)
+    //         return true;
+    //     return isSubtree(root->right,subRoot);
+    // }
+    
+    //shorter solution
+    bool isSame(TreeNode* root, TreeNode* subRoot)
     {
         if(root==NULL && subRoot==NULL)
             return true;
         if(root==NULL || subRoot==NULL)
             return false;
-        if(inorder(root->left,subRoot->left)==false)
-            return false;
         if(root->val!=subRoot->val)
             return false;
-        return inorder(root->right,subRoot->right);
+        return isSame(root->left,subRoot->left) && isSame(root->right,subRoot->right);
     }
     bool isSubtree(TreeNode* root, TreeNode* subRoot) {
-        // if(root==NULL)
-        //     return true;
-        if((root==NULL && subRoot!=NULL) || (root!=NULL && subRoot==NULL))
+        if(root==NULL)
             return false;
-        if(root->val==subRoot->val)
-        {
-            if(inorder(root,subRoot)==true)
-                return true;
-        }
-        if(isSubtree(root->left,subRoot)==true)
-            return true;
-        return isSubtree(root->right,subRoot);
+        if(isSame(root,subRoot))
+        return true;
+        return isSubtree(root->left,subRoot) || isSubtree(root->right,subRoot);
     }
 };
