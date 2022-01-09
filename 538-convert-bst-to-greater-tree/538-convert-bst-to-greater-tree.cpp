@@ -11,22 +11,45 @@
  */
 class Solution {
 public:
-    //post-order traversal
-    int sum=0;
-    void helper(TreeNode* root)
-    {
-        if(root==NULL)
-            return;
-        helper(root->right);
-        root->val+=sum;
-        sum=root->val;
-        helper(root->left);
-        return;
-    }
+    //right-root-left(recursion)
+    // int sum=0;
+    // void helper(TreeNode* root)
+    // {
+    //     if(root==NULL)
+    //         return;
+    //     helper(root->right);
+    //     root->val+=sum;
+    //     sum=root->val;
+    //     helper(root->left);
+    //     return;
+    // }
+    // TreeNode* convertBST(TreeNode* root) {
+    //     if(root==NULL)
+    //         return 0;
+    //     helper(root);
+    //     return root;
+    // }
+    
+    //stack
     TreeNode* convertBST(TreeNode* root) {
         if(root==NULL)
             return 0;
-        helper(root);
+        int sum=0;
+        TreeNode* curr=root;
+        stack<TreeNode*>s;
+        while(curr!=NULL || !s.empty())
+        {
+            while(curr!=NULL)
+            {
+                s.push(curr);
+                curr=curr->right;
+            }
+            curr=s.top();
+            s.pop();
+            curr->val+=sum;
+            sum=curr->val;
+            curr=curr->left;
+        }
         return root;
     }
 };
