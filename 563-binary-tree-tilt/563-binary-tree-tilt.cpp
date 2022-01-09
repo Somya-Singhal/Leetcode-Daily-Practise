@@ -13,35 +13,27 @@ class Solution {
 public:
     int ans=0;
     // unordered_map<TreeNode*,int>mp;
-    int sumSubTree(TreeNode* root)
-    {
-        if(root==NULL)
-            return 0;
-        return (root->val+sumSubTree(root->left)+sumSubTree(root->right));
-    }
     int calculate(TreeNode* root)
     {
         if(root==NULL)
             return 0;
-        int left=0,right=0;
+        // int left=0,right=0;
         // if(mp.find(root->left)!=mp.end())
         //     left=mp[root->left];
         // else
-            left=sumSubTree(root->left);
+            int left=calculate(root->left);
         // mp[root->left]=left;
         // if(mp.find(root->right)!=mp.end())
         //     right=mp[root->right];
         // else
-        right=sumSubTree(root->right);
+        int right=calculate(root->right);
         // mp[root->right]=right;
         ans+=abs(left-right);
-        return (left+right);
+        return (root->val+left+right);
     }
     int findTilt(TreeNode* root) {
         if(root==NULL)
             return 0;
-        findTilt(root->left);
-        findTilt(root->right);
         calculate(root);
         return ans;
     }
