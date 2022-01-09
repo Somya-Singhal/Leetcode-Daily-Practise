@@ -12,7 +12,7 @@
 class Solution {
 public:
     int ans=0;
-    unordered_map<TreeNode*,int>mp;
+    // unordered_map<TreeNode*,int>mp;
     int sumSubTree(TreeNode* root)
     {
         if(root==NULL)
@@ -24,16 +24,16 @@ public:
         if(root==NULL)
             return 0;
         int left=0,right=0;
-        if(mp.find(root->left)!=mp.end())
-            left=mp[root->left];
-        else
+        // if(mp.find(root->left)!=mp.end())
+        //     left=mp[root->left];
+        // else
             left=sumSubTree(root->left);
-        mp[root->left]=left;
-        if(mp.find(root->right)!=mp.end())
-            right=mp[root->right];
-        else
+        // mp[root->left]=left;
+        // if(mp.find(root->right)!=mp.end())
+        //     right=mp[root->right];
+        // else
         right=sumSubTree(root->right);
-        mp[root->right]=right;
+        // mp[root->right]=right;
         ans+=abs(left-right);
         return (left+right);
     }
@@ -41,8 +41,8 @@ public:
         if(root==NULL)
             return 0;
         findTilt(root->left);
-        calculate(root);
         findTilt(root->right);
+        calculate(root);
         return ans;
     }
 };
