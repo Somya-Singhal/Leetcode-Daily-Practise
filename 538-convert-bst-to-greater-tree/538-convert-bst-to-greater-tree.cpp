@@ -31,25 +31,63 @@ public:
     // }
     
     //stack
+    // TreeNode* convertBST(TreeNode* root) {
+    //     if(root==NULL)
+    //         return 0;
+    //     int sum=0;
+    //     TreeNode* curr=root;
+    //     stack<TreeNode*>s;
+    //     while(curr!=NULL || !s.empty())
+    //     {
+    //         while(curr!=NULL)
+    //         {
+    //             s.push(curr);
+    //             curr=curr->right;
+    //         }
+    //         curr=s.top();
+    //         s.pop();
+    //         curr->val+=sum;
+    //         sum=curr->val;
+    //         curr=curr->left;
+    //     }
+    //     return root;
+    // }
+    
+    //morris traversal
     TreeNode* convertBST(TreeNode* root) {
         if(root==NULL)
             return 0;
-        int sum=0;
         TreeNode* curr=root;
-        stack<TreeNode*>s;
-        while(curr!=NULL || !s.empty())
+        int sum=0;
+        while(curr!=NULL)
         {
-            while(curr!=NULL)
+            if(curr->right==NULL)
             {
-                s.push(curr);
-                curr=curr->right;
+                sum+=curr->val;
+                curr->val=sum;
+                curr=curr->left;
             }
-            curr=s.top();
-            s.pop();
-            curr->val+=sum;
-            sum=curr->val;
-            curr=curr->left;
-        }
+            else
+            {
+                TreeNode* temp=curr->right;
+                while(temp->left!=NULL && temp->left!=curr)
+                {
+                    temp=temp->left;
+                }
+                if(temp->left==NULL)
+                {
+                    temp->left=curr;
+                    curr=curr->right;
+                }
+                else
+                {
+                    sum+=curr->val;
+                    curr->val=sum;
+                    temp->left=NULL;
+                    curr=curr->left;
+                }
+            }
+        } 
         return root;
     }
 };
