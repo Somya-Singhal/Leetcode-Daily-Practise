@@ -23,13 +23,19 @@ public:
     {
         if(root==NULL)
             return 0;
-        if(mp.find(root)!=mp.end())
-            return mp[root];
         int left=0,right=0;
-        left=sumSubTree(root->left);
+        if(mp.find(root->left)!=mp.end())
+            left=mp[root->left];
+        else
+            left=sumSubTree(root->left);
+        mp[root->left]=left;
+        if(mp.find(root->right)!=mp.end())
+            right=mp[root->right];
+        else
         right=sumSubTree(root->right);
+        mp[root->right]=right;
         ans+=abs(left-right);
-        return mp[root]=(left+right);
+        return (left+right);
     }
     int findTilt(TreeNode* root) {
         if(root==NULL)
