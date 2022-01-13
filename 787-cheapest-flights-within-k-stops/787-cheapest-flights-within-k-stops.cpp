@@ -50,9 +50,9 @@ public:
             adj[u].push_back(make_pair(v,wt));
         }
          dist[src]=0;
+         vector<int>temp=dist;
         for(int i=0;i<k+1;i++)
         {
-            vector<int>temp=dist;
             for(auto x:flights)
             {
                 if(dist[x[0]]==INT_MAX)
