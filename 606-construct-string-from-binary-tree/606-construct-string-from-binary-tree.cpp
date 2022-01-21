@@ -11,50 +11,56 @@
  */
 class Solution {
 public:
-    string tree2str(TreeNode* root) {
-//         TreeNode* curr=root;
-//         stack<TreeNode*>s;
-//         string str;
-//         while(curr!=NULL || !s.empty())
+    //recursion
+//         string str="";
+//         if(root==NULL)
+//             return str;
+//         str+=to_string(root->val);
+//         if(root->left && root->right)
 //         {
-//             while(curr!=NULL)
-//             {
-//                 str+='(';
-//                 s.push(curr);
-//                 str+=to_string(curr->val);
-//                 curr=curr->left;
-//             }
-//             curr=s.top();
-//             s.pop();
-//             if(curr->right!=NULL)
-//             {
-                
-//                 str+='(';
-//                 str+=')';
-//             }
-//             else
-//                 str+=')';
-//             curr=curr->right;
+//             str+="("+tree2str(root->left)+")("+tree2str(root->right)+")";
 //         }
-//         return str.substr(1,str.length()-1);
-        string str="";
-        if(root==NULL)
-            return str;
-        str+=to_string(root->val);
-        if(root->left && root->right)
-        {
-            str+='('+tree2str(root->left)+')';
-            str+='('+tree2str(root->right)+')';
-        }
             
-        if(root->left==NULL && root->right)
+//         if(root->left==NULL && root->right)
+//         {
+//             str+='(';
+//             str+=')';
+//             str+='('+tree2str(root->right)+')';
+//         }
+//         if(root->left && root->right==NULL)
+//             str+="("+tree2str(root->left)+")";
+//         return str;
+    string tree2str(TreeNode* root) {
+        //stack
+        if(root==NULL)
+            return "";
+        stack<TreeNode*>s;
+        string str="";
+        unordered_set<TreeNode*>vis;
+        s.push(root);
+        while(!s.empty())
         {
-            str+='(';
-            str+=')';
-            str+='('+tree2str(root->right)+')';
+            TreeNode* curr=s.top();
+            if(vis.find(curr)!=vis.end())
+            {
+                s.pop();
+                str+=")";
+            }
+            else
+            {
+                vis.insert({curr});
+                str+="("+to_string(curr->val);
+                if(curr->left==NULL && curr->right!=NULL)
+                {
+                     str+="(";
+                     str+=")";
+                }
+                if(curr->right!=NULL)
+                    s.push(curr->right);
+                if(curr->left!=NULL)
+                    s.push(curr->left);
+            }
         }
-        if(root->left && root->right==NULL)
-            str+='('+tree2str(root->left)+')';
-        return str;
-    }
+        return str.substr(1,str.length()-2);
+    }    
 };
