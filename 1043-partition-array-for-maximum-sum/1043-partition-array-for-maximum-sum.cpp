@@ -1,18 +1,35 @@
 class Solution {
 public:
-    int maxSumAfterPartitioning(vector<int>& arr, int k) {
+    //time:O(nk), space:O(n)
+    // int maxSumAfterPartitioning(vector<int>& arr, int k) {
+    //     int n=arr.size();
+    //     vector<int>dp(n+1,0);
+    //     for(int i=1;i<=n;i++)
+    //     {
+    //         int maxarr=0,best=0;
+    //         for(int j=1;(i-j)>=0 && j<=k;j++)
+    //         {
+    //             maxarr=max(maxarr,arr[i-j]);
+    //             best=max(best,dp[i-j]+maxarr*j);
+    //         }
+    //         dp[i]=best;
+    //     }
+    //     return dp[n];
+    // }
+    
+     int maxSumAfterPartitioning(vector<int>& arr, int k) {
         int n=arr.size();
-        vector<int>dp(n+1,0);
+        vector<int>dp(k);
         for(int i=1;i<=n;i++)
         {
-            int maxarr=0,best=0;
+            int best=0,currmax=0;
             for(int j=1;(i-j)>=0 && j<=k;j++)
             {
-                maxarr=max(maxarr,arr[i-j]);
-                best=max(best,dp[i-j]+maxarr*j);
+                currmax=max(currmax,arr[i-j]);
+                best=max(best,dp[(i-j)%k]+currmax*j);
             }
-            dp[i]=best;
+            dp[i%k]=best;
         }
-        return dp[n];
+        return dp[n%k];
     }
 };
