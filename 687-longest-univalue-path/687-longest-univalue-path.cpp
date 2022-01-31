@@ -45,13 +45,16 @@ public:
             return 0;
         int leftPath=longestPath(root->left);
         int rightPath=longestPath(root->right);
-        int leftVal=0,rightVal=0;
         if(root->left && root->left->val==root->val)
-          leftVal=1+leftPath;
+         leftPath++;
+        else
+           leftPath=0; 
         if(root->right && root->right->val==root->val)
-          rightVal=1+rightPath;
-        maxpath=max(maxpath,leftVal+rightVal);
-        return max(leftVal,rightVal);
+         rightPath++;
+        else
+          rightPath=0;  
+        maxpath=max(maxpath,leftPath+rightPath);
+        return max(leftPath,rightPath);
         
     }
     int longestUnivaluePath(TreeNode* root) {
