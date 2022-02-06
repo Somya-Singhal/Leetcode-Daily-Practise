@@ -51,12 +51,12 @@ public:
            removedescendent(x); 
         }
     }
-    bool ancestor(int num)
-    {
-        if(num==-1)
-            return false;
-        return nodes[num][1]!=-1 || ancestor(nodes[num][0]);
-    }
+    // bool ancestor(int num)
+    // {
+    //     if(num==-1)
+    //         return false;
+    //     return nodes[num][1]!=-1 || ancestor(nodes[num][0]);
+    // }
     bool upgrade(int num, int user) {
         if(nodes[num][1]!=-1)
             return false;
@@ -64,8 +64,15 @@ public:
         countlockeddesc(num,present);
         if(!present)
             return false;
-       if(ancestor(nodes[num][0]))
-           return false;
+        int i=nodes[num][0];
+        while(i!=-1)
+        {
+            if(nodes[i][1]!=-1)
+                return false;
+            i=nodes[i][0];
+        }
+       // if(ancestor(nodes[num][0]))
+       //     return false;
         removedescendent(num);  
         nodes[num][1]=user;
         return true;
