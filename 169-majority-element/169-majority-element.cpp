@@ -18,7 +18,7 @@ public:
         return res;
     }
     int majorityElement(vector<int>& nums) {
-        sort(nums.begin(),nums.end());
+        // sort(nums.begin(),nums.end());
         int n=nums.size();
         int i=mooreVoting(nums);
         int count=0;
