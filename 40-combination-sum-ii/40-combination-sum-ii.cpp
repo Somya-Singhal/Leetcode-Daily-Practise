@@ -47,6 +47,8 @@ public:
         {
             if(s>idx && candidates[s]==candidates[s-1])
                 continue;
+            if(candidates[s]>target)
+                break;
             v.push_back(candidates[s]);
             solve(s+1,candidates,target,n,sum+candidates[s],res,v);
             v.pop_back();     
