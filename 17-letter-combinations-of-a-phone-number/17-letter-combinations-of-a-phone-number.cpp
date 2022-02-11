@@ -1,6 +1,18 @@
 class Solution {
 public:
-    void solve(int idx,string s,string digits,vector<string>& res,vector<string>& mp)
+    // void solve(int idx,string s,string digits,vector<string>& res,vector<string>& mp)
+    // {
+    //     if(idx==digits.size())
+    //     {
+    //         res.push_back(s);
+    //         return;
+    //     }
+    //     for(auto x:mp[digits[idx]-'2'])
+    //         solve(idx+1,s+x,digits,res,mp);
+    //     return;
+    // }
+    
+     void solve(int idx,string s,string digits,vector<string>& res,vector<string>& mp)
     {
         if(idx==digits.size())
         {
@@ -8,7 +20,11 @@ public:
             return;
         }
         for(auto x:mp[digits[idx]-'2'])
-            solve(idx+1,s+x,digits,res,mp);
+        {
+             s+=x;
+             solve(idx+1,s,digits,res,mp);
+             s.pop_back();
+        }
         return;
     }
     vector<string> letterCombinations(string digits) {
