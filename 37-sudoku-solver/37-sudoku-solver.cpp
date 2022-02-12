@@ -4,14 +4,9 @@ public:
     {
         for(int idx=0;idx<9;idx++)
         {
-            if(board[i][idx]!='.' && board[i][idx]==k)
+            if(board[i][idx]==k || board[idx][j]==k || (board[3*(i/3)+idx/3][3*(j/3)+idx%3]!='.' && board[3*(i/3)+idx/3][3*(j/3)+idx%3]==k))
                 return false;
-        
-            if(board[idx][j]!='.' && board[idx][j]==k)
-                return false;
-            
-            if(board[3*(i/3)+idx/3][3*(j/3)+idx%3]!='.' && board[3*(i/3)+idx/3][3*(j/3)+idx%3]==k)
-                return false;
+           
         }
         
         return true;
