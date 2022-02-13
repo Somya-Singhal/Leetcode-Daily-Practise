@@ -21,7 +21,7 @@ public:
         // }
         vector<vector<int>>res;
         multiset<int>ml;
-        int currht=0,pre=0;
+        int currht=0;
         ml.insert({0});
         for(int i=0;i<arr.size();i++)
         {
@@ -31,14 +31,14 @@ public:
                  ml.insert({-ht});
             else
                 ml.erase(ml.find(ht));
-            currht=*ml.rbegin();
-            if(currht!=pre)
+            // currht=*ml.rbegin();
+            if(currht!=*ml.rbegin())
             {
                 vector<int>temp;
                 temp.push_back(x);
-                temp.push_back(currht);
+                temp.push_back(*ml.rbegin());
                 res.push_back(temp);
-                pre=currht;
+                currht=*ml.rbegin();
             }
         }
         return res;
