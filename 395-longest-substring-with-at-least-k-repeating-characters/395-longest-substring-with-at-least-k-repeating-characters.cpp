@@ -29,26 +29,77 @@ public:
     // }
     
      
-     int solve(int lo,int hi,string &s,int k)
+     // int solve(int lo,int hi,string &s,int k)
+     // {
+     //     if(hi<lo)
+     //         return 0;
+     //     vector<int>count(26,0);
+     //     for(int i=lo;i<hi;i++)
+     //         count[s[i]-'a']++;
+     //     for(int part=lo;part<hi;part++)
+     //     {
+     //         if(count[s[part]-'a']>=k)
+     //             continue;
+     //         int nextMid=part+1;
+     //         while(nextMid<hi && count[s[nextMid]-'a']<k)
+     //             nextMid++;
+     //         return max(solve(lo,part,s,k),solve(nextMid,hi,s,k));
+     //     }
+     //     return (hi-lo);
+     // }
+    //  int longestSubstring(string s, int k) {
+    //     int n=s.length();
+    //     return solve(0,n,s,k);
+    // }
+    
+     int getTotalUnique(string &s)
      {
-         if(hi<lo)
-             return 0;
-         vector<int>count(26,0);
-         for(int i=lo;i<hi;i++)
-             count[s[i]-'a']++;
-         for(int part=lo;part<hi;part++)
+         int n=s.length();
+         int count=0;
+         vector<bool>mp(26,false);
+         for(int i=0;i<n;i++)
          {
-             if(count[s[part]-'a']>=k)
-                 continue;
-             int nextMid=part+1;
-             while(nextMid<hi && count[s[nextMid]-'a']<k)
-                 nextMid++;
-             return max(solve(lo,part,s,k),solve(nextMid,hi,s,k));
+             if(mp[s[i]-'a']==false)
+                 count++;
+             mp[s[i]-'a']=true;
          }
-         return (hi-lo);
+         return count;
      }
      int longestSubstring(string s, int k) {
         int n=s.length();
-        return solve(0,n,s,k);
+        int count[26];
+         int maxlen=0;
+         int totalUnique=getTotalUnique(s);
+         for(int currUnique=1;currUnique<=totalUnique;currUnique++)
+         {
+             memset(count,0,sizeof(count));
+             int start=0,end=0,idx=0,unique=0,countKele=0;
+             while(end<n)
+             {
+                 if(unique<=currUnique)
+                 {
+                     idx=s[end]-'a';
+                     if(count[idx]==0)
+                         unique++;
+                     count[idx]++;
+                     if(count[idx]==k)
+                         countKele++;
+                     end++;
+                 }
+                 else
+                 {
+                    idx=s[start]-'a';
+                    if(count[idx]==k)
+                        countKele--;
+                     count[idx]--;
+                     if(count[idx]==0)
+                         unique--;
+                     start++;
+                 }
+                 if(unique==currUnique && unique==countKele)
+                   maxlen=max(maxlen,end-start);  
+             }
+         }
+         return maxlen;
     }
 };
