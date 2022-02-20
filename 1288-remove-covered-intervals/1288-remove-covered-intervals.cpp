@@ -13,7 +13,7 @@ public:
                 ans++;
             }
             else{
-                res[0]=min(res[0],intervals[i][0]);
+                // res[0]=min(res[0],intervals[i][0]);
                 res[1]=max(res[1],intervals[i][1]);
             }
         }
