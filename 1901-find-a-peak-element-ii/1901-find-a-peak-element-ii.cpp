@@ -4,7 +4,6 @@ public:
     vector<int> findPeakGrid(vector<vector<int>>& mat) {
         int row=mat.size();
         int col=mat[0].size();
-        vector<int>ans;
         int startcol=0,endcol=col-1;
         while(startcol<=endcol)
         {
