@@ -58,7 +58,7 @@ public:
                 {
                     if(k==1)
                       dp[i][j][k]=s1[i]==s2[j];
-                    else 
+                   else 
                     for(int q=1;q<k && !dp[i][j][k];q++)
                       dp[i][j][k]=(dp[i][j][q] && dp[i+q][j+q][k-q]) || (dp[i][j+k-q][q] && dp[i+q][j][k-q]);
                 }
