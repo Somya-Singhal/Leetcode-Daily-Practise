@@ -9,8 +9,18 @@ public:
             vector<int>dp(n);
             for(int right=left;right<m;right++)
             {
+                int currmax=0,totalmax=INT_MIN;
                 for(int i=0;i<n;i++)
+                {
                     dp[i]+=matrix[i][right];
+                    currmax=max(currmax+dp[i],dp[i]);
+                    totalmax=max(totalmax,currmax);       
+                }
+                if(totalmax<=k)
+                {
+                    ans=max(ans,totalmax);
+                    continue;
+                }
                 set<int>s;
                 s.insert(0);
                 int presum=0;
