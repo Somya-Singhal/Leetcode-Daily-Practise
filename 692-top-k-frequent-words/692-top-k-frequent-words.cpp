@@ -23,9 +23,10 @@ public:
         }
         while(!pq.empty())
         {
-            res.insert(res.begin(),pq.top().second);
+            res.push_back(pq.top().second);
             pq.pop();
         }
+        reverse(res.begin(),res.end());
         return res;
     }
 };
