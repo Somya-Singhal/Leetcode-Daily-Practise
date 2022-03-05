@@ -60,28 +60,24 @@ public:
     
     //space-optimized bottom-up dp
     int deleteAndEarn(vector<int>& nums) {
-        unordered_map<int,int>count;
+        map<int,int>count;
         int n=nums.size();
-         int maxnum=INT_MIN;
         for(int i=0;i<n;i++)
         {
-            count[nums[i]]++;
+            count[nums[i]]+=nums[i];
         }
+        vector<int>keys;
         for(auto &x:count)
-        {
-            maxnum=max(maxnum,x.first);
-            x.second*=x.first;
-        }
-        int first=0,second=0;
-        if(count.find(1)!=count.end())
-        {
-            second=count[1];
-        }
-         for(int i=2;i<=maxnum;i++)
+            keys.push_back(x.first);
+        sort(keys.begin(),keys.end());
+        int first=0,second=count[keys[0]];
+         for(int i=1;i<keys.size();i++)
          {
-             int curr=second;
-             if(count.find(i)!=count.end())
-                 curr=max(count[i]+first,second);
+             int curr;
+             if(keys[i]==keys[i-1]+1)
+                 curr=max(count[keys[i]]+first,second);
+             else
+                 curr+=count[keys[i]];
              first=second;
              second=curr;
          }
