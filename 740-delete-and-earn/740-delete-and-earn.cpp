@@ -29,8 +29,37 @@ public:
     // }
     
     
-    //bottom-up--->
-     int deleteAndEarn(vector<int>& nums) {
+    //bottom-up--->time->O(N+k), space->O(N+k)
+    //  int deleteAndEarn(vector<int>& nums) {
+    //     unordered_map<int,int>count;
+    //     int n=nums.size();
+    //      int maxnum=INT_MIN;
+    //     for(int i=0;i<n;i++)
+    //     {
+    //         count[nums[i]]++;
+    //     }
+    //     for(auto &x:count)
+    //     {
+    //         maxnum=max(maxnum,x.first);
+    //        x.second*=x.first;
+    //     }
+    //     vector<int>cache(maxnum+1,0);
+    //     if(count.find(1)!=count.end())
+    //     {
+    //         cache[1]=count[1];
+    //     }
+    //      for(int i=2;i<=maxnum;i++)
+    //      {
+    //          if(count.find(i)!=count.end())
+    //              cache[i]=max(count[i]+cache[i-2],cache[i-1]);
+    //          else
+    //              cache[i]=cache[i-1];
+    //      }
+    //     return cache[maxnum];
+    // }
+    
+    //space-optimized bottom-up dp
+    int deleteAndEarn(vector<int>& nums) {
         unordered_map<int,int>count;
         int n=nums.size();
          int maxnum=INT_MIN;
@@ -41,21 +70,22 @@ public:
         for(auto &x:count)
         {
             maxnum=max(maxnum,x.first);
-           x.second*=x.first;
+            x.second*=x.first;
         }
-        vector<int>cache(maxnum+1,0);
+        int first=0,second=0;
         if(count.find(1)!=count.end())
         {
-            cache[1]=count[1];
+            second=count[1];
         }
          for(int i=2;i<=maxnum;i++)
          {
+             int curr=second;
              if(count.find(i)!=count.end())
-                 cache[i]=max(count[i]+cache[i-2],cache[i-1]);
-             else
-                 cache[i]=cache[i-1];
+                 curr=max(count[i]+first,second);
+             first=second;
+             second=curr;
          }
-        return cache[maxnum];
+        return second;
     }
     
 };
