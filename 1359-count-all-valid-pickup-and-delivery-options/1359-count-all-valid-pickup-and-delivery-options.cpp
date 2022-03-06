@@ -19,24 +19,38 @@ public:
     // }
     
     
-     int mod=1e9+7;
-     int countOrders(int n) {
-      vector<vector<long long>>dp(n+1,vector<long long>(n+1,0));
-         for(int unpicked=0;unpicked<=n;unpicked++)
-         {
-             for(int undelivered=0;undelivered<=n;undelivered++)
-             {
-                 if(unpicked==0 && undelivered==0)
-                 {
-                     dp[unpicked][undelivered]=1;
-                     continue;
-                 }
-                 if(unpicked>0)
-                    dp[unpicked][undelivered]+=unpicked*dp[unpicked-1][undelivered]%mod;
-                 if(undelivered>unpicked)
-                 dp[unpicked][undelivered]+=(undelivered-unpicked)*dp[unpicked][undelivered-1]%mod;
-             }
-         }
-         return dp[n][n];
-    }
+    //  int mod=1e9+7;
+    //  int countOrders(int n) {
+    //   vector<vector<long long>>dp(n+1,vector<long long>(n+1,0));
+    //      for(int unpicked=0;unpicked<=n;unpicked++)
+    //      {
+    //          for(int undelivered=0;undelivered<=n;undelivered++)
+    //          {
+    //              if(unpicked==0 && undelivered==0)
+    //              {
+    //                  dp[unpicked][undelivered]=1;
+    //                  continue;
+    //              }
+    //              if(unpicked>0)
+    //                 dp[unpicked][undelivered]+=unpicked*dp[unpicked-1][undelivered]%mod;
+    //              if(undelivered>unpicked)
+    //              dp[unpicked][undelivered]+=(undelivered-unpicked)*dp[unpicked][undelivered-1]%mod;
+    //          }
+    //      }
+    //      return dp[n][n];
+    // }
+    
+    int mod=1e9+7;
+      int countOrders(int n) {
+          long long ans=1;
+          for(int i=1;i<=n;i++)
+          {
+              ans*=i;
+              ans*=(2*i-1);
+              ans%=mod;
+          }
+          
+          return ans;     
+          
+}
 };
