@@ -10,15 +10,15 @@ class Solution {
 public:
     bool hasCycle(ListNode *head) {
         ListNode *slow=head,*fast=head;
-        if(fast==NULL || fast->next==NULL)
-            return false;
+        // if(fast==NULL || fast->next==NULL)
+        //     return false;
         while(fast!=NULL && fast->next!=NULL)
         {
             slow=slow->next;
             fast=fast->next->next;
             if(slow==fast)
-                break;
+                return true;
         }
-        return slow==fast;
+        return false;
     }
 };
