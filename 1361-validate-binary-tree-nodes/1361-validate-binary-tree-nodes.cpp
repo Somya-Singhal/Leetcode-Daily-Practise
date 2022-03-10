@@ -16,7 +16,7 @@ public:
                 int p=find(i,parent),c=find(leftChild[i],parent);
                 if(p!=c)
                 {
-                    parent[c]=p;
+                    parent[leftChild[i]]=i;
                     indegree[leftChild[i]]++;
                 }
                 else
@@ -27,7 +27,7 @@ public:
                 int p=find(i,parent),c=find(rightChild[i],parent);
                 if(p!=c)
                 {
-                    parent[c]=p;
+                    parent[rightChild[i]]=i;
                     indegree[rightChild[i]]++;
                 }
                 else
