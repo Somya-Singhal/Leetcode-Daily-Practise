@@ -70,6 +70,8 @@ public:
                 {
                     for(int j=0;j<list.size();j++)
                     {
+                        if(temp[i]==list[j])
+                            continue;
                         temp[i]=list[j];
                         if(word.find(temp)!=word.end())
                         {
