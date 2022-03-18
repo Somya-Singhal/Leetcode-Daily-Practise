@@ -19,8 +19,20 @@ public:
     int closestCost(vector<int>& baseCosts, vector<int>& toppingCosts, int target) {
         int ans=INT_MAX;
         int b=baseCosts.size();
+        sort(baseCosts.begin(),baseCosts.end());
         for(int i=0;i<b;i++)
-        solve(0,baseCosts[i],ans,toppingCosts,target);        
+        {
+            if(baseCosts[i]<target)
+             solve(0,baseCosts[i],ans,toppingCosts,target);
+            else {
+                if(abs(target-baseCosts[i])<abs(target-ans)){
+                    ans=baseCosts[i];
+                }
+                else if(abs(target-baseCosts[i])==abs(target-ans)){
+                    ans=min(ans,baseCosts[i]);
+                }
+            }
+        }        
         return ans;
     }
 };
