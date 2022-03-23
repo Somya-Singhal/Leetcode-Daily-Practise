@@ -1,8 +1,8 @@
 class Solution {
 public:
-    // int dx[4]={0,-1,0,1};
-    // int dy[4]={-1,0,1,0};
-    int DIR[5] = {0, 1, 0, -1, 0};
+    int dx[4]={0,-1,0,1};
+    int dy[4]={-1,0,1,0};
+    // int DIR[5] = {0, 1, 0, -1, 0};
    
     bool solve(vector<vector<int>>& cells,int row,int col,int mid)
     {
@@ -28,7 +28,7 @@ public:
                 return true;
             for(int i=0;i<4;i++)
             {
-                int newx=x+DIR[i],newy=y+DIR[i+1];
+                int newx=x+dx[i],newy=y+dy[i];
                 if( newx<0 || newx==row || newy<0 || newy==col || grid[newx][newy]==1)
                     continue;
                 grid[newx][newy]=1;
