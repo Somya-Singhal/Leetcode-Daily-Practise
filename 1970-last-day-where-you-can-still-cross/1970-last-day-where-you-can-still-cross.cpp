@@ -6,7 +6,7 @@ public:
    
     bool solve(vector<vector<int>>& cells,int row,int col,int mid)
     {
-        vector<vector<bool>>grid(row,vector<bool>(col,0));
+        vector<vector<int>>grid(row,vector<int>(col,0));
         queue<pair<int,int>>q;
         for(int i=0;i<mid;i++)
         {
