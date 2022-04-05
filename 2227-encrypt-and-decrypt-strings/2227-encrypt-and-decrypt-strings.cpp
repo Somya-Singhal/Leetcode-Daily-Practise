@@ -81,8 +81,6 @@ public:
            }
            if(!flag)
            dec[decrypt_str]++;
-           else
-               dec[x]=0;
        }
     }
     
