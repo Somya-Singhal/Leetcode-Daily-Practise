@@ -33,12 +33,8 @@ public:
     //     return res;
     // }
     
-     int minimumDifference(vector<int>& nums) {
-       int n=nums.size();
-       int n1=n/2,sum=0,res=0;
-         for(int i=0;i<n;i++)
-             sum+=nums[i];
-//        vector<int>left_v,right_v;
+    
+    //        vector<int>left_v,right_v;
 //          for(int i=0;i<n;i++){
 //              sum+=nums[i];
 //              if(i<n1)
@@ -53,6 +49,55 @@ public:
 //              }
                 
 //          }
+    
+    //  int minimumDifference(vector<int>& nums) {
+    //    int n=nums.size();
+    //    int n1=n/2,sum=0,res=0;
+    //      for(int i=0;i<n;i++)
+    //          sum+=nums[i];
+    //      vector<vector<int>>left_sum(n1+1),right_sum(n1+1);
+    //       for(int mask=0;mask<(1<<n1);mask++){
+    //          int len=0,l=0,r=0;
+    //          for(int i=0;i<n1;i++){
+    //              if(mask&(1<<i))
+    //              {
+    //                  len++;
+    //                  l+=nums[i];
+    //                  r+=nums[n1+i];
+    //              }
+    //          }
+    //           left_sum[len].push_back(l);
+    //           right_sum[len].push_back(r);
+    //       }
+    //      for(int i=0;i<=n1;i++)
+    //          sort(right_sum[i].begin(),right_sum[i].end());
+    //       res=min(abs(sum-2*left_sum[n1][0]),abs(sum-2*right_sum[n1][0]));
+    //          for(int sz=1;sz<n1;sz++){
+    //              for(int x:left_sum[sz]){
+    //                  int a=(sum-2*x)/2,y=n1-sz;
+    //                  auto comp=lower_bound(right_sum[y].begin(),right_sum[y].end(),a);
+    //                  if(comp!=right_sum[y].end())
+    //                  {
+    //                      // int left=x+*comp;
+    //                      // int right=sum-left;
+    //                      // res=min(res,abs(left-right));
+    //                       res=min(res,abs(sum-2*(x+*comp)));
+    //                  }
+    //                  if(comp!=right_sum[y].begin()){
+    //                     auto it=comp;
+    //                     --it;
+    //                      res=min(res,abs(sum-2*(x+*it)));
+    //                  }
+    //              }
+    //          } 
+    //     return res; 
+    // }
+    
+    int minimumDifference(vector<int>& nums) {
+       int n=nums.size();
+       int n1=n/2,sum=0,res=0;
+         for(int i=0;i<n;i++)
+             sum+=nums[i];
          vector<vector<int>>left_sum(n1+1),right_sum(n1+1);
           for(int mask=0;mask<(1<<n1);mask++){
              int len=0,l=0,r=0;
@@ -81,11 +126,11 @@ public:
                          // res=min(res,abs(left-right));
                           res=min(res,abs(sum-2*(x+*comp)));
                      }
-                     if(comp!=right_sum[y].begin()){
-                        auto it=comp;
-                        --it;
-                         res=min(res,abs(sum-2*(x+*it)));
-                     }
+                     // if(comp!=right_sum[y].begin()){
+                     //    auto it=comp;
+                     //    --it;
+                     //     res=min(res,abs(sum-2*(x+*it)));
+                     // }
                  }
              } 
         return res; 
