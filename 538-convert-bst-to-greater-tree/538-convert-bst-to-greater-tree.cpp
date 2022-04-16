@@ -11,83 +11,15 @@
  */
 class Solution {
 public:
-    //right-root-left(recursion)
-    // int sum=0;
-    // void helper(TreeNode* root)
-    // {
-    //     if(root==NULL)
-    //         return;
-    //     helper(root->right);
-    //     root->val+=sum;
-    //     sum=root->val;
-    //     helper(root->left);
-    //     return;
-    // }
-    // TreeNode* convertBST(TreeNode* root) {
-    //     if(root==NULL)
-    //         return 0;
-    //     helper(root);
-    //     return root;
-    // }
-    
-    //stack
-    // TreeNode* convertBST(TreeNode* root) {
-    //     if(root==NULL)
-    //         return 0;
-    //     int sum=0;
-    //     TreeNode* curr=root;
-    //     stack<TreeNode*>s;
-    //     while(curr!=NULL || !s.empty())
-    //     {
-    //         while(curr!=NULL)
-    //         {
-    //             s.push(curr);
-    //             curr=curr->right;
-    //         }
-    //         curr=s.top();
-    //         s.pop();
-    //         curr->val+=sum;
-    //         sum=curr->val;
-    //         curr=curr->left;
-    //     }
-    //     return root;
-    // }
-    
-    //morris traversal
+    int sum=0;
     TreeNode* convertBST(TreeNode* root) {
-        if(root==NULL)
-            return 0;
-        TreeNode* curr=root;
-        int sum=0;
-        while(curr!=NULL)
-        {
-            if(curr->right==NULL)
-            {
-                sum+=curr->val;
-                curr->val=sum;
-                curr=curr->left;
-            }
-            else
-            {
-                TreeNode* temp=curr->right;
-                while(temp->left!=NULL && temp->left!=curr)
-                {
-                    temp=temp->left;
-                }
-                if(temp->left==NULL)
-                {
-                    temp->left=curr;
-                    curr=curr->right;
-                }
-                else
-                {
-                    sum+=curr->val;
-                    curr->val=sum;
-                    temp->left=NULL;
-                    curr=curr->left;
-                }
-            }
-        } 
+        
+        if(root!=NULL){
+            convertBST(root->right);
+            sum+=root->val;
+            root->val=sum;
+            convertBST(root->left); 
+        }
         return root;
     }
 };
