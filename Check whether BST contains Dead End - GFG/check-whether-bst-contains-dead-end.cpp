@@ -101,46 +101,37 @@ Node * right, * left;
 };*/
 
 /*You are required to complete below method */
-void inorderbst(Node* root,unordered_set<int> &s1,vector<int> &v){
+// void inorderbst(Node* root,unordered_set<int> &s1,vector<int> &v){
+//     if(root==NULL)
+//     return;
+//     inorderbst(root->left,s1,v);
+//     s1.insert(root->data);
+//     if(root->left==NULL && root->right==NULL)
+//     v.push_back(root->data);
+//     inorderbst(root->right,s1,v);
+// }
+bool solve(Node* root,int min_val,int max_val)
+{
     if(root==NULL)
-    return;
-    inorderbst(root->left,s1,v);
-    s1.insert(root->data);
-    if(root->left==NULL && root->right==NULL)
-    v.push_back(root->data);
-    inorderbst(root->right,s1,v);
+    return false;
+    if(min_val==max_val)
+    return true;
+    return solve(root->left,min_val,root->data-1) || solve(root->right,root->data+1,max_val);
 }
 bool isDeadEnd(Node *root)
 {
-    //Your code here
-    // stack<Node*>s;
-    // Node* curr=root,*pp=NULL,*np=NULL;
-    // while(curr!=NULL || !s.empty())
-    // {
-    //     while(curr!=NULL)
-    //     {
-    //         s.push(curr);
-    //         pp=curr;
-    //         curr=curr->left;
-    //     }
-    //     curr=s.top();
-    //     s.pop();
-    //     if(np!=NULL && np->data+1==curr->data)
-    //     {
-    //         if(pp!=NULL && )
-    //     }
-    // }
-    // return true;
     
-    unordered_set<int>s1;
-    vector<int>v;
-    inorderbst(root,s1,v);
-    for(auto x: v)
-    {
-        if(x==1 && s1.find(2)!=s1.end())
-        return true;
-        else if(s1.find(x-1)!=s1.end() && s1.find(x+1)!=s1.end())
-        return true;
-    }
-    return false;
+    // unordered_set<int>s1;
+    // vector<int>v;
+    // inorderbst(root,s1,v);
+    // for(auto x: v)
+    // {
+    //     if(x==1 && s1.find(2)!=s1.end())
+    //     return true;
+    //     else if(s1.find(x-1)!=s1.end() && s1.find(x+1)!=s1.end())
+    //     return true;
+    // }
+    // return false;
+    return solve(root,1,INT_MAX);
+    
 }
