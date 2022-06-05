@@ -64,7 +64,7 @@ int main()
 //Function to push an integer into the stack1.
 void twoStacks :: push1(int x)
 {
-    if(top1==size)
+    if(top1>=top2-1)
     return;
     arr[++top1]=x;
 }
@@ -72,7 +72,7 @@ void twoStacks :: push1(int x)
 //Function to push an integer into the stack2.
 void twoStacks ::push2(int x)
 {
-    if(top2==0)
+    if(top2<=top1+1)
     return;
     arr[--top2]=x;
 }
