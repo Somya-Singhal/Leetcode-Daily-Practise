@@ -9,7 +9,7 @@ class Solution {
         // Write Your Code here
         int count=0;
         while(N){
-            if(N%2)
+            if(N & 1)
             count++;
             N=N>>1;
         }
