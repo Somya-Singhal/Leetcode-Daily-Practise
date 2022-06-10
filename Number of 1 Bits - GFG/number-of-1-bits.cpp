@@ -11,7 +11,7 @@ class Solution {
         while(N){
             if(N%2)
             count++;
-            N=N/2;
+            N=N>>1;
         }
         return count;
     }
