@@ -1,41 +1,36 @@
 class Solution {
 public:
     int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
+        queue<pair<string,int>>q;
         unordered_set<string>dict(wordList.begin(),wordList.end());
-        unordered_map<string,unordered_set<string>>adj;
-        unordered_map<string,int>vis;
-        queue<string>q;
-        q.push(beginWord);
-        vis[beginWord]=0;
+        unordered_set<string>vis;
+        q.push({beginWord,1});
+        vis.insert(beginWord);
+        
         while(!q.empty())
         {
-            string str=q.front();
+            string t=q.front().first;
+            int dist=q.front().second;
             q.pop();
-            string temp=str;
-            for(int i=0;i<temp.length();i++)
+            if(t==endWord)
+                return dist;
+            for(int i=0;i<t.length();i++)
             {
-                for(char c='a';c<='z';c++)
+                 for(char c='a';c<='z';c++)
                 {
-                    if(temp[i]==c)
-                        continue;
-                    temp[i]=c;
-                    if(dict.find(temp)!=dict.end())
-                    {
-                        if(vis.find(temp)==vis.end())
-                        {
-                            vis[temp]=vis[str]+1;
-                            adj[str].insert(temp);
-                            q.push(temp);
-                        }
-                        else if(vis[temp]==vis[str]+1)
-                        {
-                            adj[str].insert(temp);
-                        }
-                    }
-                    temp[i]=str[i];
+                    char x=t[i];
+                    t[i]=c;
+                     if(vis.find(t)==vis.end() && dict.find(t)!=dict.end())
+                     {
+                         q.push({t,dist+1});
+                         vis.insert(t);
+                     }
+                     t[i]=x;
                 }
             }
+           
         }
-        return vis.count(endWord)>0?vis[endWord]+1:0;
-    }
+        return 0;
+        
+        }
 };
