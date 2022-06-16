@@ -11,34 +11,25 @@ class Solution
 {
     public:
     //Function to find the maximum number of cuts.
-    int solve(int n,int x,int y,int z,vector<int>& dp)
-    {
-        if(n==0)
-        return 0;
-        if(n<0)
-        return INT_MIN;
-        if(dp[n]!=INT_MIN)
-        return dp[n];
-        // int a=INT_MIN,b=INT_MIN,c=INT_MIN;
-        // if(x<=n)
-        // a=solve(n-x,x,y,z,dp);
-        // if(y<=n)
-        // b=solve(n-y,x,y,z,dp);
-        // if(z<=n)
-        // c=solve(n-z,x,y,z,dp);
-        // return dp[n]=1+max(max(a,b),c);
-        return dp[n]=1+max(max(solve(n-x,x,y,z,dp),solve(n-y,x,y,z,dp)),solve(n-z,x,y,z,dp));
-    }
     int maximizeTheCuts(int n, int x, int y, int z)
     {
         //Your code here
-        vector<int>dp(n+1,INT_MIN);
-        // cout<<INT_MIN<<" ";
-        int ans=solve(n,x,y,z,dp);
-        if(ans<0)
-        return 0;
-        else
-        return ans;
+        vector<int>dp(n+1,-1);
+        dp[0]=0;
+        for(int i=0;i<=n;i++)
+        {
+            if(dp[i]==-1)
+            continue;
+            if(i+x<=n)
+            dp[i+x]=max(dp[i+x],dp[i]+1);
+            if(i+y<=n)
+            dp[i+y]=max(dp[i+y],dp[i]+1);
+            if(i+z<=n)
+            dp[i+z]=max(dp[i+z],dp[i]+1);
+        }
+        if(dp[n]==-1)
+        dp[n]=0;
+        return dp[n];
     }
 };
 
