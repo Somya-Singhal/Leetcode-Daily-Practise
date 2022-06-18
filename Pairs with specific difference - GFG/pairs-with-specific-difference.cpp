@@ -9,20 +9,33 @@ class Solution{
     int maxSumPairWithDifferenceLessThanK(int arr[], int n, int K)
     {
         // Your code goes here   
-        vector<int>dp(n,0);
+        // vector<int>dp(n,0);
+        // sort(arr,arr+n);
+        // for(int i=1;i<n;i++)
+        // {
+        //     dp[i]=dp[i-1];
+        //     if(arr[i]-arr[i-1]<K)
+        //     {
+        //         if(i>=2)
+        //         dp[i]=max(dp[i],dp[i-2]+arr[i]+arr[i-1]);
+        //         else
+        //         dp[i]=max(dp[i],arr[i]+arr[i-1]);
+        //     }
+        // }
+        // return dp[n-1];
+        
+        
         sort(arr,arr+n);
-        for(int i=1;i<n;i++)
+        int maxsum=0;
+        for(int i=n-1;i>0;i--)
         {
-            dp[i]=dp[i-1];
             if(arr[i]-arr[i-1]<K)
             {
-                if(i>=2)
-                dp[i]=max(dp[i],dp[i-2]+arr[i]+arr[i-1]);
-                else
-                dp[i]=max(dp[i],arr[i]+arr[i-1]);
+                maxsum+=arr[i]+arr[i-1];
+                i--;
             }
         }
-        return dp[n-1];
+        return maxsum;
     }
 };
 
