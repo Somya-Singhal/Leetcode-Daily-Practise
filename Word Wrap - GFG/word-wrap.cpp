@@ -13,7 +13,7 @@ public:
     { 
         // Code here
         int n=nums.size();
-        int dp[n],ans[n];
+        int dp[n];
         int len,cost;
         dp[n-1]=0;
         for(int i=n-2;i>=0;i--)
@@ -32,7 +32,6 @@ public:
                 if(cost<dp[i])
                 {
                       dp[i]=cost;
-                      ans[i]=j;
                 }
              
             }
