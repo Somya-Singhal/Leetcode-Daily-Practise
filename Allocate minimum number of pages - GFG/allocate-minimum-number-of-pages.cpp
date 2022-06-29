@@ -39,7 +39,7 @@ class Solution
         int sum=0;
         for(int i=0;i<N;i++)
         sum+=A[i];
-        int lo=0,hi=sum,ans=0;
+        int lo=A[0],hi=sum,ans=0;
         while(lo<=hi)
         {
             int mid=(lo+hi)/2;
