@@ -19,15 +19,15 @@ class Solution
         {
             if(a[i]>mid)
             return false;
-            if(sum+a[i]>mid)
+            sum+=a[i];
+            if(sum>mid)
             {
                 st++;
                 sum=a[i];
-                if(st>m)
-                  return false;
+                
             }
-            else
-            sum+=a[i];
+            if(st>m)
+            return false;
         }
         return true;
     }
