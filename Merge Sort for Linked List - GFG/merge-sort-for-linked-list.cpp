@@ -31,23 +31,20 @@ class Solution{
     //Function to sort the given linked list using Merge Sort.
     void findmid(Node *head,Node **s1,Node **s2)
     {
-    Node* fast;
-    Node* slow;
-    slow = head;
-    fast = head->next;
- 
-    /* Advance 'fast' two nodes, and advance 'slow' one node */
-    while (fast != NULL) {
-        fast = fast->next;
-        if (fast != NULL) {
-            slow = slow->next;
-            fast = fast->next;
+        Node *slow=head,*fast=head->next;
+        while(fast!=NULL)
+        {
+            fast=fast->next;
+            if(fast!=NULL)
+            {
+                slow=slow->next;
+                fast=fast->next;
+            }
         }
-    }
-        *s1=head;
+        
         *s2=slow->next;
         slow->next=NULL;
-       
+        *s1=head;
     }
     Node* merge(Node *a,Node *b)
     {
@@ -70,6 +67,7 @@ class Solution{
     }
     void split(Node **headref)
     {
+     
         Node *head=*headref;
         Node *a,*b;
         if(head==NULL || head->next==NULL)
@@ -84,7 +82,7 @@ class Solution{
         split(&head);
         return head;
     }
-};
+};// 
 
 
 // { Driver Code Starts.
