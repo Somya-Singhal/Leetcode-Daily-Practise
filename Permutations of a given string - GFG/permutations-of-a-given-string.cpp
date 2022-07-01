@@ -6,36 +6,29 @@ using namespace std;
 class Solution
 {
 	public:
-	    void solve(string s,string str,set<string>& st,vector<int>& vis)
+	    void solve(int l,int r,string S,vector<string>& res)
 	    {
-	        if(str.length()==s.length())
+	        if(l==r)
 	        {
-	           st.insert(str);
-	           return;
+	            res.push_back(S);
+	            return;
 	        }
-	        for(int i=0;i<s.length();i++)
+	        for(int i=l;i<=r;i++)
 	        {
-	            if(vis[i]==1)
+	            if(i>0 && S[i]==S[i-1])
 	            continue;
-	            vis[i]=1;
-	            str+=s[i];
-	            solve(s,str,st,vis);
-	            vis[i]=0;
-	            str.pop_back();
+	            swap(S[l],S[i]);
+	            solve(l+1,r,S,res);
+	            swap(S[l],S[i]);
 	        }
 	    }
 		vector<string>find_permutation(string S)
 		{
 		    // Code here there
-		  //  sort(S.begin(),S.end());
-		    set<string>st;
 		    vector<string>res;
-		    vector<int>vis(S.length(),0);
-		    solve(S,"",st,vis);
-		    for(auto x: st)
-		    {
-		        res.push_back(x);
-		    }
+		    sort(S.begin(),S.end());
+		    solve(0,S.length()-1,S,res);
+		    sort(res.begin(),res.end());
 		    return res;
 		}
 };
