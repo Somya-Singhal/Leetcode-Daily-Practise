@@ -1,20 +1,24 @@
 class Solution {
 public:
     int numPermsDISequence(string S) {
-        int n = S.size(), m = 1e9 + 7;
-        vector<vector<int>> dp(n+1, vector<int>(n+1, 0));
-        dp[0][0] = 1;
-        for(int i = 1; i <= n; i++)
-            for(int j = 0; j <= i; j++)
-                if(S[i-1] == 'D')
-                    for(int k = j; k <= i-1; k++)
-                        dp[i][j] = dp[i][j]%m + dp[i-1][k]%m;
-                else
-                    for(int k = 0; k <= j-1; k++)
-                        dp[i][j] = dp[i][j]%m + dp[i-1][k]%m;
-        int res = 0;
-        for(int i = 0; i <= n; i++)
-            res = res%m + dp[n][i]%m;
-        return res%m;
+        int n = S.length(), M = (int)1e9 + 7;
+        vector<int>dp(n + 1,1);
+        for (int i = 1; i <= n; i++) {
+            vector<int>temp(n+1,0);
+            for (int j = 0; j <= i; j++) {
+                temp[j] = j == 0 ? 0 : temp[j - 1];
+                if (S[i - 1] == 'D') {
+                    temp[j] += (dp[i - 1] - (j == 0 ? 0 : dp[j - 1])) % M;
+                    if (temp[j] < 0) {
+                        temp[j] += M;
+                    }
+                } else {
+                    temp[j] += j == 0 ? 0 : dp[j - 1];
+                }
+                temp[j] %= M;
+            }
+            dp = temp;
+        }
+        return dp[n];
     }
 };
