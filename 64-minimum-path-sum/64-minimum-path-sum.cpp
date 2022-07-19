@@ -20,19 +20,33 @@ public:
         // }
         // return grid[0][0];
         
+        // int m=grid.size(),n=grid[0].size();
+        // vector<int>pre(m,grid[0][0]),curr(m,0);
+        // for(int i=1;i<m;i++)
+        //     pre[i]=pre[i-1]+grid[i][0];
+        // for(int j=1;j<n;j++)
+        // {
+        //     curr[0]=pre[0]+grid[0][j];
+        //     for(int i=1;i<m;i++)
+        //     {
+        //         curr[i]=min(curr[i-1],pre[i])+grid[i][j];
+        //     }
+        //     pre=curr;
+        // }
+        // return pre[m-1];
+        
         int m=grid.size(),n=grid[0].size();
-        vector<int>pre(m,grid[0][0]),curr(m,0);
+        vector<int>curr(m,grid[0][0]);
         for(int i=1;i<m;i++)
-            pre[i]=pre[i-1]+grid[i][0];
+            curr[i]=curr[i-1]+grid[i][0];
         for(int j=1;j<n;j++)
         {
-            curr[0]=pre[0]+grid[0][j];
+            curr[0]+=grid[0][j];
             for(int i=1;i<m;i++)
             {
-                curr[i]=min(curr[i-1],pre[i])+grid[i][j];
+                curr[i]=min(curr[i-1],curr[i])+grid[i][j];
             }
-            pre=curr;
         }
-        return pre[m-1];
+        return curr[m-1];
     }
 };
