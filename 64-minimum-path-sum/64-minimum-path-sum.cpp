@@ -35,17 +35,29 @@ public:
         // }
         // return pre[0];
         
+        // int m=grid.size(),n=grid[0].size();
+        // vector<int>curr(m,grid[m-1][n-1]);
+        // for(int i=m-2;i>=0;i--)
+        //     curr[i]=curr[i+1]+grid[i][n-1];
+        // for(int j=n-2;j>=0;j--)
+        // {
+        //     curr[m-1]+=grid[m-1][j];
+        //     for(int i=m-2;i>=0;i--)
+        //     {
+        //         curr[i]=min(curr[i+1],curr[i])+grid[i][j];
+        //     }
+        // }
+        // return curr[0];
+        
         int m=grid.size(),n=grid[0].size();
-        vector<int>curr(m,grid[m-1][n-1]);
+        vector<int>curr(n,grid[m-1][n-1]);
+        for(int i=n-2;i>=0;i--)
+            curr[i]=curr[i+1]+grid[m-1][i];
         for(int i=m-2;i>=0;i--)
-            curr[i]=curr[i+1]+grid[i][n-1];
-        for(int j=n-2;j>=0;j--)
         {
-            curr[m-1]+=grid[m-1][j];
-            for(int i=m-2;i>=0;i--)
-            {
-                curr[i]=min(curr[i+1],curr[i])+grid[i][j];
-            }
+            curr[n-1]+=grid[i][n-1];
+            for(int j=n-2;j>=0;j--)
+                curr[j]=min(curr[j+1],curr[j])+grid[i][j];
         }
         return curr[0];
     }
