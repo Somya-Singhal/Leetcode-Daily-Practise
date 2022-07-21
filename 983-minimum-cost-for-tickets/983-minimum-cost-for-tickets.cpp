@@ -3,7 +3,7 @@ public:
     int solve(int i,int curr,vector<int>& days, vector<int>& costs,vector<vector<int>>& dp)
     {
         int n=days.size();
-        if(i==n)
+        if(i==n || curr>365)
             return 0;
         if(dp[i][curr]!=INT_MAX)
             return dp[i][curr];
@@ -21,7 +21,7 @@ public:
     }
     int mincostTickets(vector<int>& days, vector<int>& costs) {
         int n=days.size();
-        vector<vector<int>>dp(n+1,vector<int>(1000,INT_MAX));
+        vector<vector<int>>dp(n+1,vector<int>(366,INT_MAX));
         return solve(0,0,days,costs,dp);
     }
 };
