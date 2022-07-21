@@ -16,22 +16,36 @@ public:
 //     }
     
     
-    int minSteps(int n) {
+//     int minSteps(int n) {
 
-        vector<int>dp(n+1,0);
+//         vector<int>dp(n+1,0);
+//         for(int i=2;i<=n;i++)
+//         {
+//             dp[i]=i;
+//             for(int j=i-1;j>1;j--)
+//             {
+//                 if(i%j==0)
+//                 {
+//                     dp[i]=dp[j]+(i/j);
+//                     break;
+//                 }
+                    
+//             }
+//         }
+//         return dp[n];
+//     }
+    
+     int minSteps(int n) {
+         int res=0;
+        
         for(int i=2;i<=n;i++)
         {
-            dp[i]=i;
-            for(int j=i-1;j>1;j--)
+            while(n%i==0)
             {
-                if(i%j==0)
-                {
-                    dp[i]=dp[j]+(i/j);
-                    break;
-                }
-                    
+                res+=i;
+                n=n/i;
             }
         }
-        return dp[n];
+        return res;
     }
 };
