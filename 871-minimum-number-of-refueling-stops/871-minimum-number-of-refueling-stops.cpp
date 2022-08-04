@@ -25,23 +25,46 @@ public:
 //     }
     
     
-     int minRefuelStops(int target, int startFuel, vector<vector<int>>& stations) {
+    //  int minRefuelStops(int target, int startFuel, vector<vector<int>>& stations) {
+    //    int n=stations.size();
+    //    vector<long long>dp(n+1,0);
+    //     dp[0]=startFuel;
+    //     for(int i=0;i<n;i++)
+    //     {
+    //         for(int j=i;j>=0;j--)
+    //         {
+    //             if(dp[j]>=stations[i][0])
+    //                 dp[j+1]=max(dp[j+1],dp[j]+stations[i][1]);
+    //         }
+    //     }
+    //     for(int i=0;i<=n;i++)
+    //     {
+    //         if(dp[i]>=target)
+    //             return i;
+    //     }
+    //      return -1;
+    // }
+    
+    int minRefuelStops(int target, int startFuel, vector<vector<int>>& stations) {
        int n=stations.size();
-       vector<long long>dp(n+1,0);
-        dp[0]=startFuel;
-        for(int i=0;i<n;i++)
-        {
-            for(int j=i;j>=0;j--)
-            {
-                if(dp[j]>=stations[i][0])
-                    dp[j+1]=max(dp[j+1],dp[j]+stations[i][1]);
-            }
-        }
-        for(int i=0;i<=n;i++)
-        {
-            if(dp[i]>=target)
-                return i;
-        }
-         return -1;
+       // if(n==0)
+       //      return (startFuel>=target?0:-1);
+       priority_queue<int>pq;
+       int curr=startFuel,res=0,i=0;
+       while(curr<target)
+       {
+           while(i<n && stations[i][0]<=curr)
+           {
+               pq.push(stations[i][1]);
+               i++;
+           }
+           if(pq.empty())
+               return -1;
+           curr+=pq.top();
+           res++;
+           pq.pop();
+       }
+        
+       return res;
     }
 };
