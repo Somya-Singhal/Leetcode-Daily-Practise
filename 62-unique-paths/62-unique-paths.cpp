@@ -16,17 +16,31 @@ public:
     //     return grid[m-1][n-1];
     // }
     
-     int uniquePaths(int m, int n) {
-        vector<int>pre(n,1),curr(n,1);
+//      int uniquePaths(int m, int n) {
+//         vector<int>pre(n,1),curr(n,1);
+        
+//         for(int i=1;i<m;i++)
+//         {
+//             for(int j=1;j<n;j++)
+//             {
+//                 curr[j]=pre[j]+curr[j-1];
+//             }
+//             swap(pre,curr);
+//         }
+//         return pre[n-1];
+//     }
+    
+    int uniquePaths(int m, int n) {
+        vector<int>curr(n,1);
         
         for(int i=1;i<m;i++)
         {
             for(int j=1;j<n;j++)
             {
-                curr[j]=pre[j]+curr[j-1];
+                curr[j]+=curr[j-1];
             }
-            swap(pre,curr);
+        
         }
-        return pre[n-1];
+        return curr[n-1];
     }
 };
