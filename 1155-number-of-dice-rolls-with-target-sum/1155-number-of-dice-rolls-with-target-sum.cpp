@@ -22,19 +22,37 @@ public:
 //         return solve(0,0,n,k,target,dp);
 //     }
     
-    int numRollsToTarget(int n, int k, int target) {
-        vector<vector<int>>dp(n+1,vector<int>(target+1,0));
-        dp[n][target]=1;
-        for(int i=n-1;i>=0;i--)
-        {
-            for(int j=0;j<=target;j++)
-            {
-                int ways=0;
-                for(int t=1;t<=min(k,target-j);t++)
-                    ways=(ways+dp[i+1][j+t])%mod;
-                dp[i][j]=ways;
-            }
-        }
-        return dp[0][0];
+    // int numRollsToTarget(int n, int k, int target) {
+    //     vector<vector<int>>dp(n+1,vector<int>(target+1,0));
+    //     dp[n][target]=1;
+    //     for(int i=n-1;i>=0;i--)
+    //     {
+    //         for(int j=0;j<=target;j++)
+    //         {
+    //             int ways=0;
+    //             for(int t=1;t<=min(k,target-j);t++)
+    //                 ways=(ways+dp[i+1][j+t])%mod;
+    //             dp[i][j]=ways;
+    //         }
+    //     }
+    //     return dp[0][0];
+    // }
+    
+    
+    int solve(int d,int k,int target,vector<vector<int>>& memo)
+    {
+        if(d==0)
+            return target==0;
+        if(memo[d][target]!=-1)
+            return memo[d][target];
+        int ways=0;
+        for(int i=max(0,target-k);i<target;i++)
+            ways=(ways+solve(d-1,k,i,memo))%mod;
+        memo[d][target]=ways;
+        return memo[d][target];
+    }
+     int numRollsToTarget(int n, int k, int target) {
+        vector<vector<int>>memo(n+1,vector<int>(target+1,-1));
+        return solve(n,k,target,memo)%mod;
     }
 };
