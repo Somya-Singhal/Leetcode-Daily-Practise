@@ -26,23 +26,45 @@ public:
     //     return solve(0,-1,-1,nums1,nums2,0,dp);
     // }
     
-    int minSwap(vector<int>& nums1, vector<int>& nums2) {
+    // int minSwap(vector<int>& nums1, vector<int>& nums2) {
+    //     int n=nums1.size();
+    //     vector<int>swapped(n,1),notSwapped(n,0);
+    //     for(int i=1;i<n;i++)
+    //     {
+    //         swapped[i]=notSwapped[i]=n;
+    //         if(nums1[i-1]<nums1[i] && nums2[i-1]<nums2[i])
+    //         {
+    //             swapped[i]=swapped[i-1]+1;
+    //             notSwapped[i]=notSwapped[i-1];
+    //         }
+    //         if(nums1[i-1]<nums2[i] && nums2[i-1]<nums1[i])
+    //         {
+    //             swapped[i]=min(swapped[i],notSwapped[i-1]+1);
+    //             notSwapped[i]=min(notSwapped[i],swapped[i-1]);
+    //         }
+    //     }
+    //     return min(swapped[n-1],notSwapped[n-1]);
+    // }
+    
+     int minSwap(vector<int>& nums1, vector<int>& nums2) {
         int n=nums1.size();
-        vector<int>swapped(n,1),notSwapped(n,0);
+        int swapped=1,notSwapped=0;
         for(int i=1;i<n;i++)
         {
-            swapped[i]=notSwapped[i]=n;
+            int new_swapped=n,new_notSwapped=n;
             if(nums1[i-1]<nums1[i] && nums2[i-1]<nums2[i])
             {
-                swapped[i]=swapped[i-1]+1;
-                notSwapped[i]=notSwapped[i-1];
+                new_swapped=swapped+1;
+                new_notSwapped=notSwapped;
             }
             if(nums1[i-1]<nums2[i] && nums2[i-1]<nums1[i])
             {
-                swapped[i]=min(swapped[i],notSwapped[i-1]+1);
-                notSwapped[i]=min(notSwapped[i],swapped[i-1]);
+                new_swapped=min(new_swapped,notSwapped+1);
+                new_notSwapped=min(new_notSwapped,swapped);
             }
+            swapped=new_swapped;
+            notSwapped=new_notSwapped;
         }
-        return min(swapped[n-1],notSwapped[n-1]);
+        return min(swapped,notSwapped);
     }
 };
