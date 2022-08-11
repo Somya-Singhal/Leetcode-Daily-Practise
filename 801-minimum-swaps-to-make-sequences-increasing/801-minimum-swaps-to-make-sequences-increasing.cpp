@@ -12,12 +12,12 @@ public:
         {
             minSwaps=solve(i+1,nums1[i],nums2[i],nums1,nums2,0,dp);
         }
-        swap(nums1[i],nums2[i]);
-        if(nums1[i]>prevA && nums2[i]>prevB)
+        // swap(nums1[i],nums2[i]);
+        if(nums2[i]>prevA && nums1[i]>prevB)
         {
-            minSwaps=min(minSwaps,solve(i+1,nums1[i],nums2[i],nums1,nums2,1,dp)+1);
+            minSwaps=min(minSwaps,solve(i+1,nums2[i],nums1[i],nums1,nums2,1,dp)+1);
         }
-        swap(nums1[i],nums2[i]);
+        // swap(nums1[i],nums2[i]);
         return dp[i][swapped]=minSwaps;
     }
     int minSwap(vector<int>& nums1, vector<int>& nums2) {
