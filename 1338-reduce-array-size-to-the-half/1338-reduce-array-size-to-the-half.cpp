@@ -1,6 +1,8 @@
 class Solution {
 public:
     int minSetSize(vector<int>& arr) {
+        //APPROACH-1
+        
         // map<int,int>mp;
         // priority_queue<pair<int,int>>pq;
         // int n=arr.size();
@@ -24,25 +26,47 @@ public:
         // }
         // return count;
         
+        
+        //APPROACH-2
+        
+        // unordered_map<int,int>mp;
+        // int n=arr.size();
+        // for(int i=0;i<n;i++)
+        // {
+        //     mp[arr[i]]++;
+        // }
+        // vector<int>freq;
+        // int count=0;
+        // for(auto x: mp)
+        // {
+        //     freq.push_back(x.second);
+        // }
+        // sort(freq.begin(),freq.end());
+        // int i=freq.size()-1,target=n/2; 
+        // while(n>target)
+        // {
+        //     n-=freq[i--];
+        //     count+=1;
+        // }
+        // return count;
+        
+        //APPROACH-3
         unordered_map<int,int>mp;
         int n=arr.size();
         for(int i=0;i<n;i++)
-        {
             mp[arr[i]]++;
-        }
-        vector<int>freq;
-        int count=0;
+        vector<int>freq(n+1,0);
         for(auto x: mp)
+            freq[x.second]++;
+        int start=n,target=n/2,removed=0,ans=0;
+        while(removed<target)
         {
-            freq.push_back(x.second);
+            ans+=1;
+            while(freq[start]==0)
+                --start;
+            removed+=start;
+            --freq[start];
         }
-        sort(freq.begin(),freq.end());
-        int i=freq.size()-1,target=n/2; 
-        while(n>target)
-        {
-            n-=freq[i--];
-            count+=1;
-        }
-        return count;
+        return ans;
     }
 };
