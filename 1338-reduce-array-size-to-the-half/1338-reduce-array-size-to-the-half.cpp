@@ -36,11 +36,11 @@ public:
         {
             freq.push_back(x.second);
         }
-        sort(freq.begin(),freq.end(),greater<int>());
-        int i=0,target=n/2; 
+        sort(freq.begin(),freq.end());
+        int i=freq.size()-1,target=n/2; 
         while(n>target)
         {
-            n-=freq[i++];
+            n-=freq[i--];
             count+=1;
         }
         return count;
