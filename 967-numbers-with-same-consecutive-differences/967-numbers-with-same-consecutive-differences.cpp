@@ -1,29 +1,26 @@
 class Solution {
 public:
-    void solve(int n,int k,string curr,vector<int>& res)
+    void solve(int i,int n,int k,unordered_set<int>& s)
     {
-        if(curr[0]=='0')
-            return;
-        if(curr.length()==n)
+        if(n==0)
         {
-            int num=stoi(curr);
-            res.push_back(num);
+            s.insert(i);
             return;
         }
-        for(int i=0;i<=9;i++)
-        {
-            if(curr.length()==0)
-                solve(n,k,to_string(i),res);
-            else {
-            int t=curr[curr.length()-1]-'0';
-            if(abs(i-t)==k)
-                solve(n,k,curr+to_string(i),res);
-            }
-        }
+        if((i%10)+k<=9)
+            solve(i*10+(i%10)+k,n-1,k,s);
+        if((i%10)-k>=0)
+            solve(i*10+(i%10)-k,n-1,k,s); 
     }
     vector<int> numsSameConsecDiff(int n, int k) {
-        vector<int>res;
-        solve(n,k,"",res);
-        return res;
+        unordered_set<int>s;
+        vector<int>ans;
+        for(int i=1;i<=9;i++)
+        {
+            solve(i,n-1,k,s);
+        }
+        for(auto x: s)
+            ans.push_back(x);
+        return ans;
     }
 };
