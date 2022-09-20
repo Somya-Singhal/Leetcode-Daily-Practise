@@ -56,27 +56,55 @@ public:
     //     return solve(0,n-1,mp,dp);
     // }
     
-     int mctFromLeafValues(vector<int>& arr) {
+    //  int mctFromLeafValues(vector<int>& arr) {
+    //     int n=arr.size();
+    //     int ans=0;
+    //     stack<int>s;
+    //     s.push(INT_MAX);
+    //     for(int i=0;i<n;i++)
+    //     {
+    //         while(s.top()<=arr[i])
+    //         {
+    //             int curr=s.top();
+    //             s.pop();
+    //             ans+=curr*min(s.top(),arr[i]);
+    //         }
+    //         s.push(arr[i]);
+    //     }
+    //     while(s.size()>2)
+    //     {
+    //         int curr=s.top();
+    //         s.pop();
+    //         ans+=curr*s.top();
+    //     }
+    //      return ans;
+    // }
+    
+    int mctFromLeafValues(vector<int>& arr) {
         int n=arr.size();
-        int ans=0;
-        stack<int>s;
-        s.push(INT_MAX);
+        vector<vector<int>>dp(n,vector<int>(n,INT_MAX));
+        map<pair<int,int>,int>mp;
         for(int i=0;i<n;i++)
         {
-            while(s.top()<=arr[i])
+            mp[{i,i}]=arr[i];
+            for(int j=i+1;j<n;j++)
             {
-                int curr=s.top();
-                s.pop();
-                ans+=curr*min(s.top(),arr[i]);
+                mp[{i,j}]=max(mp[{i,j-1}],arr[j]);
             }
-            s.push(arr[i]);
         }
-        while(s.size()>2)
+        for(int i=0;i<n;i++)
+           dp[i][i]=0;
+        for(int gap=1;gap<n;gap++)
         {
-            int curr=s.top();
-            s.pop();
-            ans+=curr*s.top();
+            for(int i=0,j=gap;i<n && j<n;i++,j++)
+            {
+                for(int k=i;k<j;k++)
+                {
+                    dp[i][j]=min(dp[i][j],mp[{i,k}]*mp[{k+1,j}]+dp[i][k]+dp[k+1][j]);
+                }
+                
+            }
         }
-         return ans;
+        return dp[0][n-1];
     }
 };
