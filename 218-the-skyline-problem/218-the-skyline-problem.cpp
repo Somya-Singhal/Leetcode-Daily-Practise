@@ -1,46 +1,38 @@
 class Solution {
 public:
-    // bool operator()(pair<int,int>& p1, pair<int,int>& p2)
-    // {
-    //     if(p1.first<p2.first)
-    //         return p1<p2;
-    //     return p1.second<=p2.second;
-    // }
+    static bool compare(const pair<int,int>&pt1,const pair<int,int>&pt2)
+    {
+        if(pt1.first==pt2.first)
+            return pt1.second<pt2.second;
+        return pt1.first<pt2.first;
+    }
     vector<vector<int>> getSkyline(vector<vector<int>>& buildings) {
-        vector<pair<int,int>>arr;
+        vector<vector<int>>ans;
+        multiset<int>s;
+        vector<pair<int,int>>pt;
         int n=buildings.size();
         for(int i=0;i<n;i++)
         {
-            arr.push_back({buildings[i][0],-buildings[i][2]});
-            arr.push_back({buildings[i][1],buildings[i][2]});
+             pt.push_back({buildings[i][0],-buildings[i][2]});
+             pt.push_back({buildings[i][1],buildings[i][2]});
         }
-        sort(arr.begin(),arr.end());
-        // for(int i=0;i<arr.size();i++)
-        // {
-        //     cout<<arr[i].first<<" "<<arr[i].second<<endl;
-        // }
-        vector<vector<int>>res;
-        multiset<int>ml;
-        int currht=0;
-        ml.insert({0});
-        for(int i=0;i<arr.size();i++)
+        sort(pt.begin(),pt.end(),compare);
+        s.insert(0);
+        for(int i=0;i<pt.size();i++)
         {
-            int x=arr[i].first;
-            int ht=arr[i].second;
+            int x=pt[i].first;
+            int ht=pt[i].second;
+            int curr=*s.rbegin();
             if(ht<0)
-                 ml.insert({-ht});
+                s.insert(-ht);
             else
-                ml.erase(ml.find(ht));
-            // currht=*ml.rbegin();
-            if(currht!=*ml.rbegin())
+              s.erase(s.find(ht));
+               
+            if(*s.rbegin()!=curr)
             {
-                vector<int>temp;
-                temp.push_back(x);
-                temp.push_back(*ml.rbegin());
-                res.push_back(temp);
-                currht=*ml.rbegin();
+                ans.push_back({x,*s.rbegin()});
             }
         }
-        return res;
+        return ans;
     }
 };
