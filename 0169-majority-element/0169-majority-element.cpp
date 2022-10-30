@@ -1,20 +1,33 @@
 class Solution {
 public:
-    int majorityElement(vector<int>& nums) {
-        int n=nums.size();
-        int target=n/2;
-        unordered_map<int,int>mp;
-        for(int i=0;i<n;i++)
-            mp[nums[i]]+=1;
-        int ans=-1;
-        for(auto &x: mp)
+    int findele(vector<int>& nums)
+    {
+        int res=0,count=1;
+        for(int i=1;i<nums.size();i++)
         {
-            if(x.second>target)
+           
+            if(nums[i]==nums[res])
+                count+=1;
+            else
+                count-=1;
+            if(count==0)
             {
-                ans=x.first;
-                break;
+                res=i;
+                count=1;
             }
         }
-        return ans;
+        return res;
+    }
+    int majorityElement(vector<int>& nums) {
+        int n=nums.size();
+        int idx=findele(nums);
+        int target=n/2;
+        int ans=-1,count=0;
+        for(int i=0;i<n;i++)
+        {
+            if(nums[i]==nums[idx])
+                count+=1;
+        }
+        return count>target?nums[idx]:-1;
     }
 };
