@@ -20,30 +20,53 @@ public:
         }
         return -1;
     }
-    int solve(vector<Job>& intervals,vector<int>& dp,int i)
-    {
-        int n=intervals.size();
-        if(i==0)
-            return intervals[i].cost;
-        if(dp[i]!=-1)
-            return dp[i];
-        int excluded=solve(intervals,dp,i-1);
-        int included=intervals[i].cost;
-        int idx=findNonOverlapping(intervals,i);
-        if(idx!=-1)
-        included+=solve(intervals,dp,idx);
-        dp[i]=max(excluded,included);
-        return dp[i];
-    }
-    int jobScheduling(vector<int>& startTime, vector<int>& endTime, vector<int>& profit) {
+    // int solve(vector<Job>& intervals,vector<int>& dp,int i)
+    // {
+    //     int n=intervals.size();
+    //     if(i==0)
+    //         return intervals[i].cost;
+    //     if(dp[i]!=-1)
+    //         return dp[i];
+    //     int excluded=solve(intervals,dp,i-1);
+    //     int included=intervals[i].cost;
+    //     int idx=findNonOverlapping(intervals,i);
+    //     if(idx!=-1)
+    //     included+=solve(intervals,dp,idx);
+    //     dp[i]=max(excluded,included);
+    //     return dp[i];
+    // }
+    // int jobScheduling(vector<int>& startTime, vector<int>& endTime, vector<int>& profit) {
+    //     vector<Job>intervals;
+    //     int n=startTime.size();
+    //     vector<int>dp(n+1,-1);
+    //     for(int i=0;i<n;i++)
+    //     {
+    //         intervals.push_back({startTime[i],endTime[i],profit[i]});
+    //     }
+    //     sort(intervals.begin(),intervals.end(),comparator);
+    //     return solve(intervals,dp,n-1);
+    // }
+     int jobScheduling(vector<int>& startTime, vector<int>& endTime, vector<int>& profit) {
         vector<Job>intervals;
         int n=startTime.size();
-        vector<int>dp(n+1,-1);
+        vector<int>dp(n,0);
+        
         for(int i=0;i<n;i++)
         {
             intervals.push_back({startTime[i],endTime[i],profit[i]});
         }
         sort(intervals.begin(),intervals.end(),comparator);
-        return solve(intervals,dp,n-1);
+        dp[0]=intervals[0].cost;
+        
+        for(int i=1;i<n;i++)
+        {
+            dp[i]=dp[i-1];
+            int included=intervals[i].cost;
+            int idx=findNonOverlapping(intervals,i);
+            if(idx!=-1)
+            included+=dp[idx];
+            dp[i]=max(dp[i],included);
+        }
+        return dp[n-1];
     }
 };
