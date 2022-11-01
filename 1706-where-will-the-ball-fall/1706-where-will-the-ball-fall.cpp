@@ -1,23 +1,23 @@
 class Solution {
 public:
     vector<int> findBall(vector<vector<int>>& grid) {
-        vector<int>res;
         int row=grid.size(),col=grid[0].size();
-        for(int c=0;c<col;c++)
+        vector<int>ans;
+        for(int i=0;i<col;i++)
         {
-            int i1=c,i2;
-            for(int r=0;r<row;r++)
+            int curr=i;
+            for(int j=0;j<row;j++)
             {
-                i2=i1+grid[r][i1];
-                if(i2<0 || i2>=col || grid[r][i1]!=grid[r][i2])
+                int next=curr+grid[j][curr];
+                if(next<0 || next>=col || grid[j][next]!=grid[j][curr])
                 {
-                    i1=-1;
+                    curr=-1;
                     break;
                 }
-                i1=i2;
+                curr=next;
             }
-           res.push_back(i1); 
+            ans.push_back(curr);
         }
-        return res;
+        return ans;
     }
 };
