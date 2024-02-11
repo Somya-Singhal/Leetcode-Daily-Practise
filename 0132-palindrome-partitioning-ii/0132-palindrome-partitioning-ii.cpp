@@ -12,41 +12,22 @@ public:
     //     }
     //     return true;
     // }
-    // int minCut(string s) {
-    //     int n=s.length();
-    //     vector<int>dp(n+1,-1);
-    //     dp[n]=0;
-    //     for(int i=n-1;i>=0;i--){
-    //         int cuts=INT_MAX;
-    //         for(int k=i;k<n;k++){
-    //             if(isPalindrome(s,i,k)){
-    //                 cuts=min(cuts,1+dp[k+1]);
-    //             }
-    //         }
-    //         dp[i]=cuts;
-    //     }
-    //     return dp[0]-1;
-    // }
-    
     int minCut(string s) {
         int n=s.length();
-        vector<vector<bool>>checkpalin(n,vector<bool>(n,false));
-        vector<int>count(n);
-        
-        //constructing boolean matrix to find which substring is palindrome
-        for(int i=0;i<n;i++)
-        {
-            int mincut=i;
-            for(int j=0;j<=i;j++)
-            {
-                if(s[i]==s[j] &&((i-j)<2 || checkpalin[j+1][i-1]))
-                {
-                    checkpalin[j][i]=true;
-                    mincut=min(mincut,(j==0)?0:count[j-1]+1);
+        vector<int>dp(n+1,-1);
+        vector<vector<int>>ispalin(n,vector<int>(n,0));
+        dp[n]=0;
+        for(int i=n-1;i>=0;i--){
+            int cuts=INT_MAX;
+            for(int k=i;k<n;k++){
+                if(s[i]==s[k] && (k-i<2 || ispalin[i+1][k-1])){
+                    ispalin[i][k]=1;
+                    cuts=min(cuts,1+dp[k+1]);
                 }
             }
-            count[i]=mincut;
+            dp[i]=cuts;
         }
-        return count[n-1];
+        return dp[0]-1;
     }
+    
 };
