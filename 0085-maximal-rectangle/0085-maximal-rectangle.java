@@ -32,9 +32,9 @@ class Solution {
     public int maximalRectangle(char[][] matrix) {
         int row=matrix.length, col=matrix[0].length;
         int ans=Integer.MIN_VALUE;
-        for(int i=0;i<row;i++){
+        // for(int i=0;i<row;i++){
             int[] temp = new int[col];
-            for(int j=i;j<row;j++){
+            for(int j=0;j<row;j++){
                 for(int k=0;k<col;k++){
                     if(matrix[j][k]=='0'){
                         temp[k]=0;
@@ -44,7 +44,7 @@ class Solution {
                 }
                 ans=Math.max(ans,largestRectangleArea(temp));
             }
-        }
+        // }
         return ans;
     }
 }
